@@ -1,6 +1,6 @@
 
-<h1 align="center">ncnnRay++: A CMake based AI & generative art platform, integrating the rayib GUI and 
-the Tencent ncnn C++ Deep Learning Library (designed for edge computing devices.).</h1>
+<h1 align="center">ncnnRay++: A CMake based AI platform, integrating the rayib and 
+the Tencent ncnn C++ DL Library.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
@@ -24,7 +24,7 @@ the Tencent ncnn C++ Deep Learning Library (designed for edge computing devices.
 <td>
   
 **ncnnRay++** is a CMake based **integration** of **_raylib** (written in C) and the very popular 
-**_Tencent ncnn_** deep learning library (C++).
+**_Tencent ncnn_** deep learning library (C++ designed for edge computing devices).
  
 **There is no OpenCV dependency for reading and writing images / videos or anything else**. Everything is self-contained using stb_image (part of raylib). 
 The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib, all of which are interchangeable.
