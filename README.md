@@ -12,7 +12,7 @@ the Tencent ncnn C++ Deep Learning Library (designed for edge computing devices.
 </p>
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/master/asstes/neuralanim3.gif?raw=true" width="80%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="80%"></a>  
 </h1>
 
 ---
@@ -31,10 +31,6 @@ The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib
 For more details, refer to: 
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
  
-<h1 align="left">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/master/asstes/logo.png?raw=true?raw=true" width="25%"></a>  
-</h1>
-
 **Why??++** I am trying to integrate both into HTML using Webassembly. This would open the door to thousands of opportunities!.  
 
 # Deep Learning Models (Tencent ncnn in C++)
