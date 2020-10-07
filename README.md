@@ -12,7 +12,7 @@ the Tencent ncnn C++ Deep Learning Library (designed for edge computing devices.
 </p>
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="80%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="50%"></a>  
 </h1>
 
 ---
