@@ -35,19 +35,19 @@ This would open the door to thousands of opportunities!.
 
 # Available AI Models (Tencent ncnn in C++)
  
- <div align='center'>
+ <div align='left'>
  <table>
    <th>Image</th>
    <th>Model name</th>
-   <th><code>Trained bin </code><br/></th>
-   <th><code>Credit C++ implementation</code><br/></th>
-   <th><code>Paper </code><br/></th>         
+   <th>Trained bin <br/></th>
+   <th>Credit C++ implementation<br/></th>
+   <th>Paper <br/></th>         
    <tr>          
      <td><img src='https://github.com/Star-Clouds/CenterFace/raw/master/results/bl3.jpg' width="300px"></td>
      <td>UltraFace</td>              
      <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a> </td>         
-     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector 
-     for Edge Devices</a> </td>              
+     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast 
+     Face Detector for Edge Devices</a> </td>              
    </tr>                 
  </table>
  </div>
