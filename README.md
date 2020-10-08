@@ -41,8 +41,8 @@ For more details, refer to:
    <th>Model name</th>
    <th><code>Traced C++ PT</code><br/></th>      
    <tr>          
-     <td><img src='./asstes/face.png' width="300px"></td>
-     <td>UltraFace/Candy</br> </td>
+     <td><img src='https://github.com/paklau99988/CenterFace/raw/master/results/bl3.jpg' width="300px"></td>
+     <td>UltraFace> </br> </td>
      <td>./resources/UltraFace.bin</td>         
    </tr>      
            
