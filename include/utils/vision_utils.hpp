@@ -40,10 +40,13 @@ ncnn::Mat VisionUtils::rayImageToNcnn(const Image &image) {
     auto pointer = new unsigned char[dataSize];
     const unsigned char *imagePointer = (unsigned char *) image.data;
     std::memcpy(pointer, imagePointer, dataSize);
-
 //    error C2664: 'ncnn::Mat ncnn::Mat::from_pixels(const unsigned char *,int,int,int,ncnn::Allocator *)': cannot convert argument 1 from 'void *const ' to 'const unsigned char *'
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
-    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGBA, width, height);
+    int type=ncnn::Mat::PIXEL_RGB;
+    if  (bytesPerPixel ==4){
+         type=ncnn::Mat::PIXEL_RGBA;
+    }
+    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), type, width, height);
     delete[] pointer;
     return tensor;
 }

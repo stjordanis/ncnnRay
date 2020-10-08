@@ -75,9 +75,9 @@ Or look up projects using it here:
 https://www.google.com/search?q=raylib+site:github.com   
 
 ## Tencent ncnn 
-ncnn has a community that is growing by the day and compiles on almost every platform.    
- 
- 
+Written in C++, ncnn has a community that is growing by the day. It compiles on almost every platform and is 
+mainly targeted at egde devices.    
+  
 <p align="right">
 <sub>(Preview)</sub>
 </p>
@@ -90,7 +90,27 @@ ncnn has a community that is growing by the day and compiles on almost every pla
 The folowing example create a ray window, allocates a `ncnn::Mat` on the GPU and draws the value  into a ray window. 
  
 ```cpp
+#include "../include/utils/vision_utils.hpp"
+int main(int argc, char** argv) {
+    VisionUtils vu=VisionUtils(); 
 
+    //RGB
+    Image image = LoadImage("parrots.png");   
+    ncnn::Mat inmat =vu.rayImageToNcnn(image);
+    std::cout<<"Total:" << inmat.total() <<std::endl;
+    std::cout<<"D:" << vu.tensorDIMS (inmat) <<std::endl;;
+    Image saveImage=vu.ncnnToRayImage(inmat);
+    ExportImage(saveImage, "parrots-ncnn-rgb.png");
+    
+    //RGBA
+    Image imageRGBA = LoadImage("windmill.png");   
+    ncnn::Mat inmatimageRGBA =vu.rayImageToNcnn(imageRGBA);
+    std::cout<<"Total:" << inmatimageRGBA.total() <<std::endl;
+    std::cout<<"D:" << vu.tensorDIMS (inmatimageRGBA) <<std::endl;;
+    Image saveImageimageRGBA=vu.ncnnToRayImage(inmatimageRGBA);
+    ExportImage(saveImageimageRGBA, "big-cat-ncnn-rgba.png");    
+
+    return 0;
 ```
 
 ## Credits + Third party libraries I used
@@ -98,6 +118,7 @@ The folowing example create a ray window, allocates a `ncnn::Mat` on the GPU and
 * RayLib UI + raylib https://github.com/raysan5/raylib which is licensed under 
 an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014 Ramon Santamaria (@raysan5) 
 
+* ncnn 
 ## Progress 
 
 |                            | 🔰 ncnnRay++ CMake  | |
@@ -108,7 +129,7 @@ an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014
 
 ## Examples
 
-#### A Simple example, mainly for testing the integration. Read an Image, allocate an ncnn tensor on the CPU.
+#### A Simple example, mainly for testing the integration. Read an Image, allocate an `ncnn:Mat` tensor on the CPU.
 
 - https://github.com/QuantScientist/ncnnRay
 

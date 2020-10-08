@@ -127,6 +127,7 @@ set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
 #target_link_libraries(ncnn_centerface ncnn)
 file(COPY "resources/parrots.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/big-cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/baboon.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 
 # # Copy trained PTH files
