@@ -1,6 +1,6 @@
 
-<h1 align="center">ncnnRay++: A CMake integrating of rayib and 
-the Tencent ncnn C++ AI platform.</h1>
+<h1 align="center">ncnnRay++: A CMake integration of rayib and 
+the Tencent ncnn C++ AI platform into HTML / Webassembly.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
@@ -31,7 +31,7 @@ The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib
 For more details, refer to: 
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
  
-**Why??++** I am trying to integrate both into HTML using Webassembly. This would open the door to thousands of opportunities!.  
+**Why??++** The goal to integrate both into HTML using Webassembly. This would open the door to thousands of opportunities!.  
 
 # Deep Learning Models (Tencent ncnn in C++)
  
