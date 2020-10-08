@@ -1,6 +1,6 @@
 
-<h1 align="center">ncnnRay++: A CMake based AI platform, integrating the rayib and 
-the Tencent ncnn C++ DL Library.</h1>
+<h1 align="center">ncnnRay++: A CMake integrating of rayib and 
+the Tencent ncnn C++ AI platform.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
