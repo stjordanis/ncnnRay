@@ -18,6 +18,7 @@ public:
 
    int tensorDIMS(const ncnn::Mat &tensor);
     ncnn::Mat rayImageToNcnn(const Image &image);
+    Image ncnnToRayImage(ncnn::Mat  &tensor);
 };
 
 VisionUtils::VisionUtils() {}
@@ -34,20 +35,29 @@ ncnn::Mat VisionUtils::rayImageToNcnn(const Image &image) {
 
     int bytesPerPixel = dataSize / (width * height);
     TraceLog(LOG_INFO, "ncnnRay: bytesPerPixel:%i", bytesPerPixel);
-    if (bytesPerPixel==4) bytesPerPixel=3;
+//    if (bytesPerPixel==4) bytesPerPixel=3;
 
     auto pointer = new unsigned char[dataSize];
     const unsigned char *imagePointer = (unsigned char *) image.data;
     std::memcpy(pointer, imagePointer, dataSize);
 
 //    error C2664: 'ncnn::Mat ncnn::Mat::from_pixels(const unsigned char *,int,int,int,ncnn::Allocator *)': cannot convert argument 1 from 'void *const ' to 'const unsigned char *'
-    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
-
-
-//    auto tensor = torch::from_blob(pointer, {(int) height, (int) width, bytesPerPixel},
-//                                   torch::kU8).clone().permute({2, 0, 1}).to(device);  // copy
+//    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
+    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGBA, width, height);
     delete[] pointer;
     return tensor;
 }
 
-
+Image VisionUtils::ncnnToRayImage(ncnn::Mat  &tensor) {
+    size_t width = tensor.w;
+    size_t height = tensor.h;
+    unsigned char* torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(3 * height * width * sizeof(unsigned char)));
+    tensor.to_pixels(torchPointer, ncnn::Mat::PIXEL_RGB);
+//    return Image{0};
+    return Image{
+            torchPointer,
+            (int) width,
+            (int) height,
+            1, //that line is mipmaps, keep as 1
+            UNCOMPRESSED_R8G8B8}; //its an enum specifying formar, 8 bit R, 8 bit G, 8 bit B, no alpha UNCOMPRESSED_R8G8B8A8 UNCOMPRESSED_R8G8B8
+}

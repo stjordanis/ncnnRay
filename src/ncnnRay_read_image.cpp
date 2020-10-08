@@ -3,7 +3,7 @@
 #include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
 #include <iostream>
 #include "raylib.h"
-#include "centerface.h"
+#include "models/centerface.h"
 #include "../include/utils/vision_utils.hpp"
 
 int main(int argc, char** argv) {
@@ -16,6 +16,9 @@ int main(int argc, char** argv) {
 
     std::cout<<"Total:" << inmat.total() <<std::endl;
     std::cout<<"D:" << vu.tensorDIMS (inmat) <<std::endl;;
+
+    Image saveImage=vu.ncnnToRayImage(inmat);
+    ExportImage(saveImage, "x.png");
 
     return 0;
 }

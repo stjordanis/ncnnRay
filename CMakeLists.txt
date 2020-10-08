@@ -93,7 +93,9 @@ set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
 # TARGET
 set(EXAMPLE_002_EXE ncnnRay_centerface)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
-add_executable(${EXAMPLE_002_EXE} src/${EXAMPLE_002_EXE}.cpp src/centerface.cpp src/centerface.h)
+add_executable(${EXAMPLE_002_EXE} src/${EXAMPLE_002_EXE}.cpp
+        src/models/centerface.cpp src/models/centerface.h
+        src/models/LFFD.cpp src/models/LFFD.h)
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_002_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
@@ -102,6 +104,21 @@ set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED YES)
 ################# EXAMPLE 006 ########################
+
+################# EXAMPLE 006 ########################
+# TARGET
+set(EXAMPLE_003_EXE ncnnRay_random)
+#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp)
+set(raylib_VERBOSE 1)
+target_link_libraries(${EXAMPLE_003_EXE} raylib  ncnn)
+#target_link_libraries(${PROJECT_NAME} m)
+target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES)
+################# EXAMPLE 006 ########################
+
 
 #add_executable(ncnn_ultraface src/ultra.cpp src/UltraFace.cpp)
 #target_link_libraries(ncnn_ultraface ncnn)
@@ -115,3 +132,11 @@ file(COPY "resources/baboon.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 # # Copy trained PTH files
 file(COPY "resources/centerface.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/centerface.param" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+file(COPY "resources/symbol_10_320_20L_5scales_v2_deploy.param" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/symbol_10_560_25L_8scales_v1_deploy.param" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+file(COPY "resources/train_10_320_20L_5scales_v2_iter_1000000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/train_10_560_25L_8scales_v1_iter_1400000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+
