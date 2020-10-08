@@ -1,6 +1,5 @@
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib and 
-the Tencent ncnn C++ AI platform into HTML / Webassembly.</h1>
+<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform into HTML / Webassembly.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
@@ -31,7 +30,8 @@ The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib
 For more details, refer to: 
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
  
-**Why??++** The goal to integrate both into HTML using Webassembly. This would open the door to thousands of opportunities!.  
+**Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is allreasy natively suppurted on WASM. 
+This would open the door to thousands of opportunities!.  
 
 # Available AI Models (Tencent ncnn in C++)
  
@@ -53,10 +53,8 @@ For more details, refer to:
  </div>
 
 
-
 # GPU or CPU?  
-If you want to test on a CPU you will have to edit the CMakeLists file.
-ncnn uses the Vulkan SDK for all its GPU operations. 
+If you want to test on a CPU you will have to edit the CMakeLists file. ncnn uses the Vulkan SDK for all its GPU operations. 
 
 GPU (Vulkan) mode:
 ```cmake
@@ -119,12 +117,14 @@ int main(int argc, char** argv) {
 an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014 Ramon Santamaria (@raysan5) 
 
 * ncnn 
-## Progress 
+## Progress / features 
 
 |                            | 🔰 ncnnRay++ CMake  | |
 | -------------------------- | :----------------: | :-------------:|
-| ncnn CPU tensor to ray Image        |         ✔️                 
-| ncnn GPU tensors to ray image       |         ✔️                 
+| `ncnn:Mat` CPU tensor to stb Image        |         ✔️                 
+| `ncnn:Mat` GPU tensors to stb image       |         ✔️                 
+| stb image to CPU `ncnn:Mat`        |         ✔️
+| Save `ncnn:Mat` as stb PNG image on disk         |         ✔️
 
 
 ## Examples
@@ -134,12 +134,12 @@ an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014
 - https://github.com/QuantScientist/ncnnRay
 
 ## Requirements:
-* Windows 10 and Microsoft Visual C++ 2019 16.4, Linux is not supported at the moment.
+* tested only on Windows 10 and Microsoft Visual C++ 2019 16.4
 * NVIDIA CUDA 10.2 + Vulkan SDK . I did not test with any other CUDA version. 
-* ncnn  
-* 64 bit only.  
+* ncnn  (downloaded automatically)  
+* Tested on 64 bit only device.  
 * CMake 3.18   
-* RayLib GUI
+* rayLib GUI (downloaded automatically).
 
 # Building using CMake
 
