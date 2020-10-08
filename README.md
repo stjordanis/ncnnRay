@@ -164,9 +164,6 @@ If you find the code or trained models useful, please consider citing:
  - Tested only on Windows 10 with Visual Studio 2019. More OS and dev env support are welcomed.
 
 ## Licensing
-Bash is free software; you can redistribute it and/or modify it under the terms of the GNU General Public 
-License as published by the Free Software Foundation; either version 3 of the License, 
-or (at your option) any later version.
 
 - Copyright © [Shlomo Kashani, author of the book "Deep Learning Interviews"](www.interviews.ai)
 
