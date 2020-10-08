@@ -46,7 +46,8 @@ For more details, refer to:
      <td><img src='https://github.com/Star-Clouds/CenterFace/raw/master/results/bl3.jpg' width="300px"></td>
      <td>UltraFace</td>              
      <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a> </td>         
-     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a> </td>              
+     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector 
+     for Edge Devices</a> </td>              
    </tr>                 
  </table>
  </div>
