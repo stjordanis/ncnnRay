@@ -1,47 +1,52 @@
-//#include <opencv2/opencv.hpp>
-#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
-#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
-#include <iostream>
-#include "models/LFFD.h"
-#include "raylib.h"
-#include "../include/utils/vision_utils.hpp"
+#include "../include/utils/vision_utils.hpp" // MUST BE INCLUDED FIRST
 
-//using namespace cv;
+void detectAndExport(VisionUtils &vu, LFFD &lffd0, const string &fileName);
 
 int main(int argc, char** argv) {
+    VisionUtils vu = VisionUtils();
+    Image im={0};
+//    Rectangle rect={0};
+//    Rectangle imageRec = {0.0f};
 
-    VisionUtils vu=VisionUtils();
     std::string model_path = ".";
+    LFFD lffd0(model_path, 5, 0);
+    LFFD lffd1(model_path, 8, 0);
+    std::string fileName="faces.png";
+    std::string fileName1="manga.png";
+//    detectAndExport(vu, lffd0, fileName);
+    detectAndExport(vu, lffd1, fileName);
+    detectAndExport(vu, lffd1, fileName1);
+    return 0;
+}
 
-	LFFD lffd(model_path,5,0);
+void detectAndExport(VisionUtils &vu, LFFD &lffd, const string &fileName) {
+    Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
+    vector<FaceInfo> face_info;
+    ncnn::Mat inmat = vu.rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << vu.tensorDIMS(inmat) << endl;;
+//    lffd0.detect(inmat, face_info, 240, 320);
+    lffd.detect(inmat, face_info, image.height, image.width);
+//    lffd.detect(inmat, face_info, 240, 320);
 
-    Image image = LoadImage("face.png");   // Loaded in CPU memory (RAM)
+    cout << "Face detections:" << face_info.size() << endl;;
+    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
 
-//	cv::Mat image = cv::imread(image_file);
-//
-    std::vector<FaceInfo> face_info;
-    ncnn::Mat inmat =vu.rayImageToNcnn(image);
+    for (int i = 0; i < face_info.size(); i++) {
 
-    std::cout<<"Total:" << inmat.total() <<std::endl;
-    std::cout<<"D:" << vu.tensorDIMS (inmat) <<std::endl;;
+        cout << "Iteration:" << i << endl;;
+        auto face = face_info[i];
+//        ImageDrawRectangle(&image, face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1, BLUE);
+//        Rectangle rec = { 0 };
+        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
 
-
-//	ncnn::Mat inmat = ncnn::Mat::from_pixels(frame.data, ncnn::Mat::PIXEL_BGR, frame.cols, frame.rows);
-	lffd.detect(inmat, face_info, 240, 320);
-
-    std::cout<<"Face detections:" << face_info.size() <<std::endl;;
-//    ImageDrawRectangle(&image, 5, 20, 100, 100, ORANGE);
-
-//	for (int i = 0; i < face_info.size(); i++)
-//	{
-//		auto face = face_info[i];
-//		cv::Point pt1(face.x1, face.y1);
-//		cv::Point pt2(face.x2, face.y2);
-//		cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
-//	}
-//
-//	cv::namedWindow("lffd", CV_WINDOW_NORMAL);
-//	cv::imshow("lffd", frame);
-//	cv::waitKey();
-	return 0;
+        ImageDrawRectangleLines(&image, rect,5, RED);
+//        ImageDrawCircle(&image, face.x1, face.y1, 1, RED);
+//        ImageDrawCircle(&image, face.x2, face.y2, 6, RED);
+        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+//        const char * txt=FormatText("%i",i);
+//        ImageDrawText(&image, Vector2 {(float)face.x1, (float)face.y1},txt, 8.0, RED);
+    }
+    string exportFile=fileName + ".exp.png";
+    ExportImage(image, exportFile.c_str());
 }

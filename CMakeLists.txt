@@ -90,10 +90,9 @@ set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_002_EXE ncnnRay_centerface)
+set(EXAMPLE_002_EXE ncnnRay_lfd)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_002_EXE} src/${EXAMPLE_002_EXE}.cpp
-        src/models/centerface.cpp src/models/centerface.h
         src/models/LFFD.cpp src/models/LFFD.h)
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_002_EXE} raylib  ncnn)
