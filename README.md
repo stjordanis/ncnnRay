@@ -19,7 +19,7 @@
 # About
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="35%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="55%"></a>  
 </h1>
 
 <table>
