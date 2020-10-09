@@ -16,7 +16,7 @@
 
 ---
 
-## About
+# About
 
 <table>
 <tr>
@@ -127,11 +127,22 @@ an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014
 | Save `ncnn:Mat` as stb PNG image on disk         |         ✔️
 
 
-## Examples
+# Examples
 
-#### A Simple example, mainly for testing the integration. Read an Image, allocate an `ncnn:Mat` tensor on the CPU.
+## A Simple example, mainly for testing the integration. Read an Image, allocate an `ncnn:Mat` tensor on the CPU.
+- https://github.com/QuantScientist/ncnnRay/blob/main/src/ncnnRay_read_image.cpp
 
-- https://github.com/QuantScientist/ncnnRay
+## LFFD: A Light and Fast Face Detector for Edge Devices
+- https://github.com/QuantScientist/ncnnRay/blob/main/src/ncnnRay_lfd.cpp
+```
+@inproceedings{LFFD,
+title={LFFD: A Light and Fast Face Detector for Edge Devices},
+author={He, Yonghao and Xu, Dezhong and Wu, Lifang and Jian, Meng and Xiang, Shiming and Pan, Chunhong},
+booktitle={arXiv:1904.10633},
+year={2019}
+}
+```
+
 
 ## Requirements:
 * tested only on Windows 10 and Microsoft Visual C++ 2019 16.4

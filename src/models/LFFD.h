@@ -1,4 +1,7 @@
 #pragma once
+//#include "raylib.h"
+#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
+#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
 #include "net.h"
 //#include "gpu.h"
 #include <string>

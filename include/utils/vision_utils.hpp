@@ -1,13 +1,15 @@
-#pragma once
+#undef Rectangle
+#pragma warning( push, 0 )
+#pragma warning( disable : 4576 )
+#include "raylib.h"
 #include <iostream>
 #include <chrono>
 #include <iostream>
 #include <typeinfo>
 #include <thread>
 #include <future>
-
 #include "net.h"
-#include "raylib.h"
+
 
 using namespace std;
 using namespace std::chrono;

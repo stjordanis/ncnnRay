@@ -46,9 +46,8 @@ if (MSVC)
     # Parallel build on MSVC (all targets)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 endif()
-set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 # Set this to the minimal version you want to support
 find_package(raylib 3.0 QUIET) # Let CMake search for a raylib-config.cmake
@@ -85,7 +84,7 @@ target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
 target_include_directories(${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
 set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
-        CXX_STANDARD 17
+        CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES)
 ################# EXAMPLE 006 ########################
 
@@ -101,7 +100,7 @@ target_link_libraries(${EXAMPLE_002_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
 target_include_directories(${EXAMPLE_002_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
 set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
-        CXX_STANDARD 17
+        CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES)
 ################# EXAMPLE 006 ########################
 
@@ -129,6 +128,9 @@ file(COPY "resources/parrots.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/big-cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/baboon.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/faces.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/windmill.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/manga.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 
 # # Copy trained PTH files
 file(COPY "resources/centerface.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
