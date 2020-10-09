@@ -25,7 +25,8 @@
 
   
 **ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
-ncnn is written in C++ designed (but not only) for edge computing devices.
+ncnn is written in C++ designed (but not only) for edge computing devices. ncnnRay solely uses the ncnn 
+project as the universal neural network inference framework.
  
 **There is no OpenCV dependency for reading and writing images / videos or anything else**. Everything is self-contained 
 using stb_image . The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib, all of which are interchangeable.
@@ -44,7 +45,7 @@ This would open the door to thousands of opportunities!.
    <th>Credit C++ implementation<br/></th>
    <th>Paper <br/></th>         
    <tr>          
-     <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces.png.exp.png?raw=true' width="300px"></td>
+     <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces.png.exp.png?raw=true' width="500px"></td>
      <td>LFFD</td>              
      <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a> </td>         
      <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a> </td>              
