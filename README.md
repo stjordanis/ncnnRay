@@ -1,4 +1,8 @@
 
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="25%"></a>  
+</h1>
+
 <h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform into HTML / WASM.</h1>
       
 <p align="center">
@@ -10,9 +14,6 @@
   <a href="#license">License</a>
 </p>
 
-<h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="25%"></a>  
-</h1>
 
 ---
 
