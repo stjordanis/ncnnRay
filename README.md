@@ -22,9 +22,7 @@
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="55%"></a>  
 </h1>
 
-<table>
-<tr>
-<td>
+
   
 **ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
 ncnn is written in C++ designed (but not only) for edge computing devices.
@@ -83,10 +81,6 @@ mainly targeted at egde devices.
 <p align="right">
 <sub>(Preview)</sub>
 </p>
-
-</td>
-</tr>
-</table>
 
 ## A simple example 
 The folowing example create a ray window, allocates a `ncnn::Mat` on the GPU and draws the value  into a ray window. 
