@@ -34,7 +34,7 @@ using stb_image . The library includes conversion utils between ray Image, `ncnn
 For more details, refer to: 
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
  
-**Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is allreasy natively suppurted on WASM. 
+**Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is already natively supported on WASM. 
 This would open the door to thousands of opportunities!.  
 
 # Available AI Models (Tencent ncnn in C++)
