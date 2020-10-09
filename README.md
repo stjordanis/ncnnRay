@@ -47,7 +47,7 @@ This would open the door to thousands of opportunities!.
    <th>Credit C++ implementation<br/></th>
    <th>Paper <br/></th>         
    <tr>          
-     <td><img src='https://github.com/Star-Clouds/CenterFace/raw/master/results/bl3.jpg' width="300px"></td>
+     <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces.png.exp.png?raw=true' width="300px"></td>
      <td>UltraFace</td>              
      <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a> </td>         
      <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast <br> 
