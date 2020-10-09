@@ -26,8 +26,7 @@
 <tr>
 <td>
   
-**ncnnRay++** is a CMake based **integration** of **_raylib_** (written in C) and 
-the very popular **Tencent ncnn** Deep Learning library. 
+**ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
 ncnn is written in C++ designed (but not only) for edge computing devices.
  
 **There is no OpenCV dependency for reading and writing images / videos or anything else**. Everything is self-contained 
