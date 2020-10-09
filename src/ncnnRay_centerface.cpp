@@ -1,18 +1,4 @@
-#undef Rectangle
-#pragma warning( push, 0 )
-#pragma warning( disable : 4576 )
-#include "raylib.h"
-//#define STB_IMAGE_WRITE_IMPLEMENTATION
-//#undef STB_IMAGE_WRITE_IMPLEMENTATION
-//#include "../include/stbi/stb_image_write.h"
-//#include <opencv2/opencv.hpp>
-#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
-#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
-#include <iostream>
-
-#include "../include/utils/vision_utils.hpp"
-#include "models/LFFD.h"
-
+#include "../include/utils/vision_utils.hpp" // MUST BE INCLUDED FIRST
 
 void detectAndExport(VisionUtils &vu, LFFD &lffd0, const string &fileName);
 
@@ -50,15 +36,15 @@ void detectAndExport(VisionUtils &vu, LFFD &lffd, const string &fileName) {
 
         cout << "Iteration:" << i << endl;;
         auto face = face_info[i];
-        ImageDrawRectangle(&image, face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1, BLUE);
-        Rectangle rec = { 0 };
-//        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+//        ImageDrawRectangle(&image, face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1, BLUE);
+//        Rectangle rec = { 0 };
+        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
 
-//        ImageDrawRectangleLines(&image, r,3, DARKPURPLE);
+        ImageDrawRectangleLines(&image, rect,5, RED);
 //        ImageDrawCircle(&image, face.x1, face.y1, 1, RED);
 //        ImageDrawCircle(&image, face.x2, face.y2, 6, RED);
-        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 3, RED);
-        const char * txt=FormatText("%i",i);
+        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+//        const char * txt=FormatText("%i",i);
 //        ImageDrawText(&image, Vector2 {(float)face.x1, (float)face.y1},txt, 8.0, RED);
     }
     string exportFile=fileName + ".exp.png";

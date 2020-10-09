@@ -1,5 +1,5 @@
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform into HTML / Webassembly.</h1>
+<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform into HTML / WASM.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
@@ -17,6 +17,10 @@
 ---
 
 # About
+
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="35%"></a>  
+</h1>
 
 <table>
 <tr>
