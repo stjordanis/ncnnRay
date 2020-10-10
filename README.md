@@ -49,9 +49,12 @@ This would open the door to thousands of opportunities!.
    <tr>          
      <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces.png.exp.png?raw=true' width="600px"></td>
      <td>LFFD</td>              
-     <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a> </td>         
+     <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a>
+     and <a href="https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices">LFFD: A Light and Fast Face Detector for Edge Devices</a> 
+     </td>         
      <td> CPU only </td>         
-     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a> </td>              
+     <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a>              
+      </td>              
    </tr>                 
  </table>
  </div>
