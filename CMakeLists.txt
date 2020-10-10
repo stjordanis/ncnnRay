@@ -127,6 +127,28 @@ set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
 ################# EXAMPLE 006 ########################
 
 
+################# EXAMPLE 006 ########################
+# TARGET
+set(EXAMPLE_009_EXE ${PROJECT_NAME}_video_UI)
+#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+add_executable(${EXAMPLE_009_EXE} src/${EXAMPLE_009_EXE}.cpp
+        include/ncnnRay.hpp
+        include/raygui/raygui.h
+        include/raygui/ricons.h
+        include/pl_mpeg/pl_mpeg.h
+        src/models/LFFD.cpp
+        src/models/LFFD.h
+        )
+set(raylib_VERBOSE 1)
+target_link_libraries(${EXAMPLE_009_EXE} raylib  ncnn)
+#target_link_libraries(${PROJECT_NAME} m)
+target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+set_target_properties(${EXAMPLE_009_EXE} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES)
+#target_compile_options(${EXAMPLE_009_EXE} PRIVATE /wd4267 /wd4244 /wd4996)
+################# EXAMPLE 006 ########################
+
 #add_executable(ncnn_ultraface src/ultra.cpp src/UltraFace.cpp)
 #target_link_libraries(ncnn_ultraface ncnn)
 
@@ -149,5 +171,16 @@ file(COPY "resources/symbol_10_560_25L_8scales_v1_deploy.param" DESTINATION ${CM
 
 file(COPY "resources/train_10_320_20L_5scales_v2_iter_1000000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/train_10_560_25L_8scales_v1_iter_1400000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+file(COPY "resources/GameCube.ttf" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+#file(COPY "resources/EBGaramond08-Regular.otf" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+file(COPY "resources/save.ogg" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/click.ogg" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/bjork-all-is-full-of-love.mpg" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+#file(COPY "resources/torch.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/torch2.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
 
 

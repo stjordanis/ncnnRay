@@ -3,7 +3,6 @@
 
 int main(int argc, char** argv) {
     VisionUtils vu = VisionUtils();
-
     vu.getGPU();
 
     std::string model_path = ".";

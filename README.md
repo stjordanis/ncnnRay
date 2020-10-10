@@ -22,8 +22,6 @@
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="55%"></a>  
 </h1>
-
-
   
 **ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
 ncnn is written in C++ designed (but not only) for edge computing devices. ncnnRay solely uses the ncnn 
@@ -36,6 +34,11 @@ For more details, refer to:
  
 **Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is already natively supported on WASM. 
 This would open the door to thousands of opportunities!.  
+
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces01.gif?raw=true" width="55%"></a>  
+</h1>
+
 
 # Available AI Models (Tencent ncnn in C++)
  
