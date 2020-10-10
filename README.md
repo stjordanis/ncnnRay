@@ -157,6 +157,7 @@ year={2019}
 * Tested on 64 bit only device.  
 * CMake 3.18   
 * rayLib GUI (downloaded automatically).
+* Vulka SDK 
 
 # Building using CMake
 
@@ -164,8 +165,10 @@ year={2019}
 **CMake** should take care of everything for you!   
 ````bash
 cd to 3rdparty\ncnn\
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" . -B bin64 && cmake.exe --build bin64
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" . 
+-B bin64 -DNCNN_VULKAN=ON -DNCNN_SYSTEM_GLSLANG=ON -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON 
+-DNCNN_BUILD_TOOLS=ON  && cmake.exe --build bin64
 ````
 CLion is strongly recommended for the build. Please setup CLion as follows: 
 ![ncnnRay++ Code](https://github.com/QuantScientist/ncnnRay/blob/master/asstes/clion.png?raw=true)
@@ -173,8 +176,10 @@ CLion is strongly recommended for the build. Please setup CLion as follows:
 Then cd to the root folder of thie project and run again:
 ````bash
 cd to the root folder
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" . -B bin64 && cmake.exe --build bin64
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" . 
+-B bin64 -DNCNN_VULKAN=ON -DNCNN_SYSTEM_GLSLANG=ON -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON 
+-DNCNN_BUILD_TOOLS=ON  && cmake.exe --build bin64
 ````
 ## Downloading and installing steps rayLib:
 The **CMake file will download this automatically for you**.
