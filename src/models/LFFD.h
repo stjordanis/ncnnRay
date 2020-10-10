@@ -1,9 +1,5 @@
-#pragma once
-//#include "raylib.h"
-#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
-#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
 #include "net.h"
-//#include "gpu.h"
+#include "gpu.h"
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -25,7 +21,7 @@ typedef struct FaceInfo {
 
 class LFFD {
 public:
-	LFFD(const std::string& model_path, int scale_num, int num_thread_ );
+	LFFD(const std::string& model_path, int scale_num, int num_thread_, bool useGPU);
 	~LFFD();
 
 	int detect(ncnn::Mat& img, std::vector<FaceInfo>& face_lis,int resize_h,int resize_w,

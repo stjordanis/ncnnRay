@@ -22,7 +22,7 @@
 #define NOMB // MB_* and MessageBox()
 #define NOMEMMGR // GMEM_, LMEM_, GHND, LHND, associated routines
 #define NOMETAFILE // typedef METAFILEPICT
-#define NOMINMAX // Macros min(a,b) and max(a,b)
+//#define NOMINMAX // Macros min(a,b) and max(a,b)
 #define NOMSG // typedef MSG and associated routines
 #define NOOPENFILE // OpenFile(), OemToAnsi, AnsiToOem, and OF_*
 #define NOSCROLL // SB_* and scrolling routines
@@ -37,9 +37,9 @@
 #define NOPROFILER // Profiler interface.
 #define NODEFERWINDOWPOS // DeferWindowPos routines
 #define NOMCX // Modem Configuration Extensions
-
 #pragma warning( push, 0 )
 #pragma warning( disable : 4576 )
+
 #include "raylib.h"
 //#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
 //#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
@@ -52,8 +52,24 @@
 #include <future>
 
 //############################################ ncnn ##########################################
-#include "models/LFFD.h"
+#include <float.h>
+#include <stdio.h>
+#ifdef _WIN32
+#include <algorithm>
+#include <windows.h> // Sleep()
+#else
+#include <unistd.h> // sleep()
+#endif
+//#include "benchmark.h"
+#include "cpu.h"
 #include "net.h"
+
+#if NCNN_VULKAN
+#include "gpu.h"
+#endif
+
+#include "models/LFFD.h"
+//############################################ ncnn ##########################################
 
 using namespace std;
 using namespace std::chrono;
@@ -62,15 +78,28 @@ class VisionUtils {
 public:
     VisionUtils();
 
-   int tensorDIMS(const ncnn::Mat &tensor);
+    int tensorDIMS(const ncnn::Mat &tensor);
     ncnn::Mat rayImageToNcnn(const Image &image);
     Image ncnnToRayImage(ncnn::Mat  &tensor);
+    void detectFacesAndExportImage(LFFD &lffd, const string &fileName);
+    void detectFacesAndDrawOnImage(LFFD &lffd, Image &image);
+    int getGPU();
+
 };
 
 VisionUtils::VisionUtils() {}
 
 int VisionUtils::tensorDIMS(const ncnn::Mat &tensor){
     return tensor.dims;
+}
+
+int VisionUtils::getGPU() {
+    // initialize when app starts
+    auto ins=ncnn::create_gpu_instance();// line1
+    std::cout<<"GPU instance=?:" << ins <<std::endl;;
+    auto g= ncnn::get_gpu_device(0);
+    std::cout<<"GPU Device=?:" << g <<std::endl;;
+    return ins;
 }
 
 ncnn::Mat VisionUtils::rayImageToNcnn(const Image &image) {
@@ -110,3 +139,53 @@ Image VisionUtils::ncnnToRayImage(ncnn::Mat  &tensor) {
             1, //that line is mipmaps, keep as 1
             UNCOMPRESSED_R8G8B8}; //its an enum specifying formar, 8 bit R, 8 bit G, 8 bit B, no alpha UNCOMPRESSED_R8G8B8A8 UNCOMPRESSED_R8G8B8
 }
+
+void VisionUtils::detectFacesAndExportImage(LFFD &lffd, const string &fileName) {
+    Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
+    vector<FaceInfo> face_info;
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << tensorDIMS(inmat) << endl;;
+//    lffd0.detect(inmat, face_info, 240, 320);
+    lffd.detect(inmat, face_info, image.height, image.width);
+//    lffd.detect(inmat, face_info, 240, 320);
+
+    cout << "Face detections:" << face_info.size() << endl;;
+    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
+
+    for (int i = 0; i < face_info.size(); i++) {
+        cout << "Iteration:" << i << endl;;
+        auto face = face_info[i];
+        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&image, rect,5, RED);
+        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+    }
+    string exportFile=fileName + ".exp.png";
+    ExportImage(image, exportFile.c_str());
+    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
+    Texture2D texture = LoadTextureFromImage(image);
+}
+
+void VisionUtils::detectFacesAndDrawOnImage(LFFD &lffd, Image &image) {
+    vector<FaceInfo> face_info;
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << tensorDIMS(inmat) << endl;;
+    lffd.detect(inmat, face_info, 240, 320);
+//    lffd.detect(inmat, face_info, image.height, image.width);
+
+    cout << "Face detections:" << face_info.size() << endl;;
+    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
+
+    for (int i = 0; i < face_info.size(); i++) {
+        cout << "Iteration:" << i << endl;;
+        auto face = face_info[i];
+        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&image, rect,5, RED);
+        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+    }
+
+//    string exportFile= "exp.exp.png";
+//    ExportImage(image, exportFile.c_str());
+}
+

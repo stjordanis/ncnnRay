@@ -71,14 +71,21 @@ if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     endif()
 endif()
 
+set (NCNN_BUILD_EXAMPLES ON)
+set (NCNN_SYSTEM_GLSLANG ON)
+
 add_subdirectory(3rdparty/ncnn ncnn_build)
 #include_directories(3rdparty/ncnn/src)
 
-################# EXAMPLE 006 ########################
-# TARGET
-set(EXAMPLE_001_EXE ncnnRay_read_image)
+################## EXAMPLE 006 ########################
+## TARGET
+set(EXAMPLE_001_EXE ${PROJECT_NAME}_read_image)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
-add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp)
+add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
+        include/ncnnRay.hpp
+        src/models/LFFD.cpp
+        src/models/LFFD.h
+        )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
@@ -86,11 +93,11 @@ target_include_directories(${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR
 set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES)
-################# EXAMPLE 006 ########################
+################## EXAMPLE 006 ########################
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_002_EXE ncnnRay_lfd)
+set(EXAMPLE_002_EXE ${PROJECT_NAME}_lfd)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_002_EXE} src/${EXAMPLE_002_EXE}.cpp
         src/models/LFFD.cpp src/models/LFFD.h)
@@ -105,15 +112,17 @@ set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_003_EXE ncnnRay_random)
+set(EXAMPLE_003_EXE ${PROJECT_NAME}_random)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
-add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp)
+add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp
+        src/models/LFFD.cpp src/models/LFFD.h
+        )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_003_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
 target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
 set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
-        CXX_STANDARD 17
+        CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES)
 ################# EXAMPLE 006 ########################
 

@@ -1,14 +1,20 @@
-
-#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
-#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
-#include "raylib.h"
-#include "../include/utils/vision_utils.hpp"
-//#include "../bin64/_deps/raylib-build/src/raylib.h"
-//#include "../3rdparty/ncnn/src/mat.h"
+#include "../include/ncnnRay.hpp"
 
 int main(int argc, char** argv) {
-
     VisionUtils vu=VisionUtils();
+
+
+    // initialize when app starts
+    vu.getGPU();
+//    auto ins=ncnn::create_gpu_instance();// line1
+//    std::cout<<"GPU instance=?:" << ins <<std::endl;;
+//    auto g= ncnn::get_gpu_device(0);
+//    std::cout<<"GPU Device=?:" << g <<std::endl;;
+
+//    GPU instance=?:0
+//    [0 GeForce GTX 1080]  queueC=2[8]  queueT=1[2]  memU=10  memDL=7  memHV=8
+//    [0 GeForce GTX 1080]  fp16p=1  fp16s=1  fp16a=0  int8s=1  int8a=1
+//    GPU Device=?:000001BD02A57F90
 
     //RGB
     Image image = LoadImage("faces.png");   // Loaded in CPU memory (RAM)
@@ -16,16 +22,16 @@ int main(int argc, char** argv) {
     std::cout<<"Total:" << inmat.total() <<std::endl;
     std::cout<<"D:" << vu.tensorDIMS (inmat) <<std::endl;;
     Image saveImage=vu.ncnnToRayImage(inmat);
-    ExportImage(saveImage, "parrots-ncnn-rgb.png");
+    ExportImage(saveImage, "faces-ncnn-rgb.png");
 
     Image imageRGBA = LoadImage("manga.png");   // Loaded in CPU memory (RAM)
     ncnn::Mat inmatimageRGBA =vu.rayImageToNcnn(imageRGBA);
     std::cout<<"Total:" << inmatimageRGBA.total() <<std::endl;
     std::cout<<"D:" << vu.tensorDIMS (inmatimageRGBA) <<std::endl;;
     Image saveImageimageRGBA=vu.ncnnToRayImage(inmatimageRGBA);
-    ExportImage(saveImageimageRGBA, "big-cat-ncnn-rgba.png");
+    ExportImage(saveImageimageRGBA, "manga-ncnn-rgba.png");
 
     //RGBA
-
+    ncnn::destroy_gpu_instance();
     return 0;
 }
