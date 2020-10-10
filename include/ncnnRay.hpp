@@ -95,8 +95,9 @@ int VisionUtils::tensorDIMS(const ncnn::Mat &tensor){
 
 int VisionUtils::getGPU() {
     // initialize when app starts
-    auto ins=ncnn::create_gpu_instance();// line1
-    std::cout<<"GPU instance=?:" << ins <<std::endl;;
+//    int ins=ncnn::get_gpu_count();
+    int ins=ncnn::create_gpu_instance();
+    std::cout<<"GPU instance=?:" << ins<<std::endl;;
     auto g= ncnn::get_gpu_device(0);
     std::cout<<"GPU Device=?:" << g <<std::endl;;
     return ins;

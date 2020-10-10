@@ -10,14 +10,26 @@ project(ncnnRay
 
 include(FetchContent)
 
-#set(CMAKE_CXX_FLAGS "-Wall")
-#set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
-##set(CMAKE_CXX_FLAGS_DEBUG "-g")
-#set(CMAKE_CXX_STANDARD 11)
-#if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-#    message(STATUS "No build type selected, default to Release")
-#    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type (default Debug)" FORCE)
-#endif()
+
+option(GPU_SUPPORT "Enable GPU support (Vulkan)" ON)
+message("-- NCNN_VULKAN flag is ${NCNN_VULKAN}")
+if (${NCNN_VULKAN})
+    message("-- AUTO-ENABLING GPU_SUPPORT")
+    set(GPU_SUPPORT ON)
+endif()
+
+if (GPU_SUPPORT)
+    message("-- GPU support is ENABLED")
+    find_package(Vulkan) # REQUIRES ncnn to be built with vulkan
+    if (${VULKAN_FOUND})
+        message("-- Vulkan found.")
+    else()
+        message("-- ERROR: AUTO-DISABLING GPU_SUPPORT, because Vulkan was not found")
+        set(GPU_SUPPORT OFF)
+    endif()
+else()
+    message("-- GPU support is DISABLED")
+endif()
 
 # shlomo
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin64)

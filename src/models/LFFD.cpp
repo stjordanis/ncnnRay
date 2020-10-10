@@ -47,13 +47,15 @@ LFFD::LFFD(const std::string& model_path, int scale_num, int num_thread_, bool u
 		    "softmax7","conv25_3_bbox" };
 	}
 
+
+
     // enable vulkan compute feature before loading
     if (useGPU) {
         lffd.opt.use_vulkan_compute = true;
     }
 	lffd.load_param(param_file_name.data());
 	lffd.load_model(bin_file_name.data());
-	std::cout <<"model loaded, GPU enables?=" << lffd.opt.use_vulkan_compute << std::endl;
+	std::cout <<"model loaded, GPU enabled?=" << lffd.opt.use_vulkan_compute << std::endl;
 
 }
 
@@ -84,6 +86,8 @@ int LFFD::detect(ncnn::Mat& img, std::vector<FaceInfo>& face_list, int resize_h,
 
 	std::vector<FaceInfo> bbox_collection;
 	ncnn::Extractor ex = lffd.create_extractor();
+
+    ex.set_vulkan_compute(true);
 	ex.set_num_threads(num_thread);
 	ex.input("data", ncnn_img);
 

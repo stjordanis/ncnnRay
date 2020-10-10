@@ -124,6 +124,11 @@ int main(int argc, char** argv) {
 an unmodified zlib/libpng license (View raylib.h for details) Copyright (c) 2014 Ramon Santamaria (@raysan5) 
 
 * ncnn 
+
+* Style transfer models from: https://github.com/nihui/ncnn-android-styletransfer
+
+* An inventory of ncnn models: https://github.com/nilseuropa/ncnn_models 
+ 
 ## Progress / features 
 
 |                            | 🔰 ncnnRay++ CMake  | |
