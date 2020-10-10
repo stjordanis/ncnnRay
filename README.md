@@ -35,6 +35,7 @@ For more details, refer to:
 **Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is already natively supported on WASM. 
 This would open the door to thousands of opportunities!.  
 
+Real-time face detection on a CPU:
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces01.gif?raw=true" width="55%"></a>  
 </h1>
