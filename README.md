@@ -1,9 +1,11 @@
 
 <h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/raylib_256x256.png?raw=true" width="25%"></a>  
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="25%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/vulcan.png?raw=true" width="25%"></a>  
 </h1>
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform into HTML / WASM.</h1>
+<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform.</h1>
       
 <p align="center">
   <a href="#about">About</a> •
@@ -24,8 +26,10 @@
 </h1>
   
 **ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
-ncnn is written in C++ designed (but not only) for edge computing devices. ncnnRay solely uses the ncnn 
-project as the universal neural network inference framework.
+ncnn is written in C++ designed (but not only) for edge computing devices. The project depends on the Vulkan SDK (Vulakn is Khronos' API
+for Graphics and Compute on GPUs).
+
+ncnnRay solely uses the ncnn project as a universal neural network inference framework.
  
 **There is no OpenCV dependency for reading and writing images / videos or anything else**. Everything is self-contained 
 using stb_image . The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib, all of which are interchangeable.
