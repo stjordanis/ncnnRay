@@ -1,9 +1,4 @@
-#include "net.h"
-#include "gpu.h"
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <iostream>
+#include "../../include/ncnnRay.hpp"
 
 #define NMS_UNION 1
 #define NMS_MIN  2
@@ -29,6 +24,9 @@ public:
                float score_threshold = 0.6, float nms_threshold = 0.5, int top_k = 10000,
                std::vector<int> skip_scale_branch_list = {});
 
+    void detectFacesAndExportImage( const string &fileName);
+    void detectFacesAndDrawOnImage( Image &image);
+
 private:
     void generateBBox(std::vector<FaceInfo> &collection, ncnn::Mat score_map, ncnn::Mat box_map, float score_threshold,
                       int fea_w, int fea_h, int cols, int rows, int scale_id);
@@ -40,7 +38,6 @@ private:
 
 private:
     ncnn::Net lffd;
-
     int num_thread;
     int num_output_scales;
     int image_w;

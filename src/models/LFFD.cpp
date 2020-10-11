@@ -1,5 +1,54 @@
 #include "LFFD.h"
 
+using namespace std;
+
+
+void LFFD::detectFacesAndExportImage( const string &fileName) {
+    Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
+    vector<FaceInfo> face_info;
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << tensorDIMS(inmat) << endl;;
+//    lffd0.detect(inmat, face_info, 240, 320);
+    detect(inmat, face_info, image.height, image.width);
+//    lffd.detect(inmat, face_info, 240, 320);
+
+    cout << "Face detections:" << face_info.size() << endl;;
+    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
+
+    for (int i = 0; i < face_info.size(); i++) {
+        cout << "Iteration:" << i << endl;;
+        auto face = face_info[i];
+        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&image, rect,5, RED);
+        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+    }
+    string exportFile=fileName + ".exp.png";
+    ExportImage(image, exportFile.c_str());
+//    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
+//    Texture2D texture = LoadTextureFromImage(image);
+}
+
+void LFFD::detectFacesAndDrawOnImage( Image &image) {
+    vector<FaceInfo> face_info;
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << tensorDIMS(inmat) << endl;;
+//    lffd.detect(inmat, face_info, 240, 320);
+    detect(inmat, face_info, image.height, image.width);
+
+    cout << "Face detections:" << face_info.size() << endl;;
+    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
+
+    for (int i = 0; i < face_info.size(); i++) {
+        cout << "Iteration:" << i << endl;;
+        auto face = face_info[i];
+        Rectangle rect = {face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&image, rect, 5, RED);
+        ImageDrawCircleV(&image, Vector2{(float) face.x1, (float) face.y1}, 5, BLUE);
+    }
+}
+
 LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
            const ncnn::Option &opt,
            ncnn::VulkanDevice *device) {
@@ -62,8 +111,7 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
 //    }
     lffd.load_param(param_file_name.data());
     lffd.load_model(bin_file_name.data());
-    std::cout << "model loaded, GPU enabled?=" << lffd.opt.use_vulkan_compute << std::endl;
-
+    TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", lffd.opt.use_vulkan_compute);
 }
 
 LFFD::~LFFD() {
@@ -74,7 +122,7 @@ int LFFD::detect(ncnn::Mat &img, std::vector<FaceInfo> &face_list, int resize_h,
                  float score_threshold, float nms_threshold, int top_k, std::vector<int> skip_scale_branch_list) {
 
     if (img.empty()) {
-        std::cout << "image is empty ,please check!" << std::endl;
+        TraceLog(LOG_INFO, "ncnnRay: empty image");
         return -1;
     }
 

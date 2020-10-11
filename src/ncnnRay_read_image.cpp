@@ -1,11 +1,8 @@
 #include "../include/ncnnRay.hpp"
 
 int main(int argc, char **argv) {
-    VisionUtils vu = VisionUtils();
-
-
     // initialize when app starts
-    vu.isGPU();
+    isGPU();
 //    auto ins=ncnn::create_gpu_instance();// line1
 //    std::cout<<"GPU instance=?:" << ins <<std::endl;;
 //    auto g= ncnn::get_gpu_device(0);
@@ -18,17 +15,17 @@ int main(int argc, char **argv) {
 
     //RGB
     Image image = LoadImage("faces.png");   // Loaded in CPU memory (RAM)
-    ncnn::Mat inmat = vu.rayImageToNcnn(image);
+    ncnn::Mat inmat = rayImageToNcnn(image);
     std::cout << "Total:" << inmat.total() << std::endl;
-    std::cout << "D:" << vu.tensorDIMS(inmat) << std::endl;;
-    Image saveImage = vu.ncnnToRayImage(inmat);
+    std::cout << "D:" << tensorDIMS(inmat) << std::endl;;
+    Image saveImage = ncnnToRayImage(inmat);
     ExportImage(saveImage, "faces-ncnn-rgb.png");
 
     Image imageRGBA = LoadImage("manga.png");   // Loaded in CPU memory (RAM)
-    ncnn::Mat inmatimageRGBA = vu.rayImageToNcnn(imageRGBA);
+    ncnn::Mat inmatimageRGBA = rayImageToNcnn(imageRGBA);
     std::cout << "Total:" << inmatimageRGBA.total() << std::endl;
-    std::cout << "D:" << vu.tensorDIMS(inmatimageRGBA) << std::endl;;
-    Image saveImageimageRGBA = vu.ncnnToRayImage(inmatimageRGBA);
+    std::cout << "D:" << tensorDIMS(inmatimageRGBA) << std::endl;;
+    Image saveImageimageRGBA = ncnnToRayImage(inmatimageRGBA);
     ExportImage(saveImageimageRGBA, "manga-ncnn-rgba.png");
 
     //RGBA

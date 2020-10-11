@@ -1,3 +1,4 @@
+#pragma once
 #define NOGDICAPMASKS // CC_, LC_, PC_, CP_, TC_, RC_
 #define NOVIRTUALKEYCODES // VK_*
 #define NOWINMESSAGES // WM_, EM_, LB_, CB_
@@ -68,15 +69,19 @@
 #include "datareader.h"
 #include "net.h"
 #include "gpu.h"
+#include "benchmark.h"
 
 //#if NCNN_VULKAN
 //#include "gpu.h"
 //#endif
 
-#include "models/LFFD.h"
-#include "models/neural.h"
+//#include "models/LFFD.h"
+//#include "models/neural.h"
 //############################################ ncnn ##########################################
 
+static int g_warmup_loop_count = 8;
+static int g_loop_count = 4;
+static bool g_enable_cooling_down = true;
 
 static ncnn::UnlockedPoolAllocator g_blob_pool_allocator;
 static ncnn::PoolAllocator g_workspace_pool_allocator;
@@ -87,57 +92,64 @@ static ncnn::VkAllocator* g_blob_vkallocator = 0;
 static ncnn::VkAllocator* g_staging_vkallocator = 0;
 #endif // NCNN_VULKAN
 
-
 using namespace std;
-using namespace std::chrono;
 
-class VisionUtils {
-public:
-    VisionUtils();
+//class VisionUtils {
+//public:
+//    VisionUtils();
+//
+//    int tensorDIMS(const ncnn::Mat &tensor);
+//    ncnn::Mat rayImageToNcnn(const Image &image);
+//    Image ncnnToRayImage(ncnn::Mat  &tensor);
+//    ncnn::Option optGPU(bool use_vulkan_compute, int gpu_device);
+//    int isGPU();
+//};
 
-    int tensorDIMS(const ncnn::Mat &tensor);
-    ncnn::Mat rayImageToNcnn(const Image &image);
-    Image ncnnToRayImage(ncnn::Mat  &tensor);
-    void detectFacesAndExportImage(LFFD &lffd, const string &fileName);
-    void detectFacesAndDrawOnImage(LFFD &lffd, Image &image);
-    ncnn::Option optGPU(bool use_vulkan_compute, int gpu_device);
-    int isGPU();
-    Image applyStyleOnImage(NeuralStyle &mdl, Image &image);
-};
+//VisionUtils::VisionUtils() {}
 
-VisionUtils::VisionUtils() {}
-
-int VisionUtils::tensorDIMS(const ncnn::Mat &tensor){
+static int tensorDIMS(const ncnn::Mat &tensor){
     return tensor.dims;
 }
-ncnn::Option VisionUtils::optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
+
+static ncnn::Option optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
     ncnn::Option opt;
     opt.lightmode = true;
     opt.num_threads = 4;
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
-    opt.use_vulkan_compute=false;
+    opt.use_winograd_convolution = true;
+    opt.use_sgemm_convolution = true;
+    opt.use_int8_inference = true;
+    opt.use_vulkan_compute = use_vulkan_compute;
+    opt.use_fp16_packed = true;
+    opt.use_fp16_storage = true;
+    opt.use_fp16_arithmetic = true;
+    opt.use_int8_storage = true;
+    opt.use_int8_arithmetic = true;
+    opt.use_packing_layout = true;
+    opt.use_shader_pack8 = false;
+    opt.use_image_storage = false;
+
+    opt.use_vulkan_compute=use_vulkan_compute;
 //    #if NCNN_VULKAN
     if (use_vulkan_compute && gpu_device >-1)
     {
         TraceLog(LOG_INFO, "ncnnRay: use_vulkan_compute:%i", use_vulkan_compute);
 //        ncnn::create_gpu_instance();
-
         opt.use_vulkan_compute=true;
-        g_vkdev = ncnn::get_gpu_device(gpu_device);
-        g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
-        g_staging_vkallocator = new ncnn::VkStagingAllocator(g_vkdev);
+
         opt.blob_vkallocator = g_blob_vkallocator;
         opt.workspace_vkallocator = g_blob_vkallocator;
         opt.staging_vkallocator = g_staging_vkallocator;
     }
 //    #endif // NCNN_VULKAN
+
     return opt;
 }
 
 
 
-int VisionUtils::isGPU() {
+static int isGPU() {
     // initialize when app starts
     int ins=ncnn::get_gpu_count();
     std::cout<<"GPU instance=?:" << ins<<std::endl;;
@@ -146,7 +158,7 @@ int VisionUtils::isGPU() {
     return ins;
 }
 
-ncnn::Mat VisionUtils::rayImageToNcnn(const Image &image) {
+static ncnn::Mat rayImageToNcnn(const Image &image) {
     size_t width = image.width;
     size_t height = image.height;
     int dataSize = GetPixelDataSize(width, height, image.format);
@@ -162,15 +174,23 @@ ncnn::Mat VisionUtils::rayImageToNcnn(const Image &image) {
 //    error C2664: 'ncnn::Mat ncnn::Mat::from_pixels(const unsigned char *,int,int,int,ncnn::Allocator *)': cannot convert argument 1 from 'void *const ' to 'const unsigned char *'
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
     int type=ncnn::Mat::PIXEL_RGB;
-    if  (bytesPerPixel ==4){
-         type=ncnn::Mat::PIXEL_RGBA;
-    }
+//    if  (bytesPerPixel ==4){
+//         type=ncnn::Mat::PIXEL_RGBA;
+//    }
+//    PIXEL_RGB = 1,
+//    PIXEL_BGR = 2,
+//    PIXEL_GRAY = 3,
+//    PIXEL_RGBA = 4,
+//    PIXEL_BGRA = 5,
+
+    TraceLog(LOG_INFO, "ncnnRay: type:%i", type);
     ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), type, width, height);
+    TraceLog(LOG_INFO, "ncnnRay: final T dims:%i", tensor.shape().dims);
     delete[] pointer;
     return tensor;
 }
 
-Image VisionUtils::ncnnToRayImage(ncnn::Mat  &tensor) {
+static Image ncnnToRayImage(ncnn::Mat  &tensor) {
     size_t width = tensor.w;
     size_t height = tensor.h;
     unsigned char* torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(3 * height * width * sizeof(unsigned char)));
@@ -182,67 +202,4 @@ Image VisionUtils::ncnnToRayImage(ncnn::Mat  &tensor) {
             (int) height,
             1, //that line is mipmaps, keep as 1
             UNCOMPRESSED_R8G8B8}; //its an enum specifying formar, 8 bit R, 8 bit G, 8 bit B, no alpha UNCOMPRESSED_R8G8B8A8 UNCOMPRESSED_R8G8B8
-}
-
-void VisionUtils::detectFacesAndExportImage(LFFD &lffd, const string &fileName) {
-    Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
-    vector<FaceInfo> face_info;
-    ncnn::Mat inmat = rayImageToNcnn(image);
-    cout << "Total:" << inmat.total() << endl;
-    cout << "D:" << tensorDIMS(inmat) << endl;;
-//    lffd0.detect(inmat, face_info, 240, 320);
-    lffd.detect(inmat, face_info, image.height, image.width);
-//    lffd.detect(inmat, face_info, 240, 320);
-
-    cout << "Face detections:" << face_info.size() << endl;;
-    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
-
-    for (int i = 0; i < face_info.size(); i++) {
-        cout << "Iteration:" << i << endl;;
-        auto face = face_info[i];
-        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
-        ImageDrawRectangleLines(&image, rect,5, RED);
-        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
-    }
-    string exportFile=fileName + ".exp.png";
-    ExportImage(image, exportFile.c_str());
-//    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
-//    Texture2D texture = LoadTextureFromImage(image);
-}
-
-void VisionUtils::detectFacesAndDrawOnImage(LFFD &lffd, Image &image) {
-    vector<FaceInfo> face_info;
-    ncnn::Mat inmat = rayImageToNcnn(image);
-    cout << "Total:" << inmat.total() << endl;
-    cout << "D:" << tensorDIMS(inmat) << endl;;
-//    lffd.detect(inmat, face_info, 240, 320);
-    lffd.detect(inmat, face_info, image.height, image.width);
-
-    cout << "Face detections:" << face_info.size() << endl;;
-    ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
-
-    for (int i = 0; i < face_info.size(); i++) {
-        cout << "Iteration:" << i << endl;;
-        auto face = face_info[i];
-        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
-        ImageDrawRectangleLines(&image, rect,5, RED);
-        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
-    }
-
-//    string exportFile= "exp.exp.png";
-//    ExportImage(image, exportFile.c_str());
-}
-
-Image VisionUtils::applyStyleOnImage(NeuralStyle &mdl, Image &image) {
-    ncnn::Mat inmat = rayImageToNcnn(image);
-    cout << "Total:" << inmat.total() << endl;
-    cout << "D:" << tensorDIMS(inmat) << endl;;
-//    lffd0.detect(inmat, face_info, 240, 320);
-    ncnn::Mat out=mdl.transform(inmat);
-//    lffd.detect(inmat, face_info, 240, 320);
-
-    Image saveImage =ncnnToRayImage(out);
-    return saveImage;
-//    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
-//    Texture2D texture = LoadTextureFromImage(image);
 }

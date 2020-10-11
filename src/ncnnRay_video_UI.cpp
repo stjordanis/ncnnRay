@@ -1,4 +1,4 @@
-#include "../include/ncnnRay.hpp" // MUST BE INCLUDED FIRST
+//#include "../include/ncnnRay.hpp" // MUST BE INCLUDED FIRST
 //#include "raylib.h"
 //#pragma warning( push, 0 )
 //#pragma warning( disable : 4576 )
@@ -15,6 +15,8 @@
 #define PL_MPEG_IMPLEMENTATION
 
 #include "../include/pl_mpeg/pl_mpeg.h"
+#include "models/neural.h"
+#include "models/LFFD.h"
 
 Font gamefont;
 
@@ -29,27 +31,36 @@ void handleImageScaling(const int screenWidth, const int screenHeight, const Ima
 
 int main() {
 
-    int numGPU = 0;
-    VisionUtils vu = VisionUtils();
+    bool use_vulkan_compute = true;
+    int gpu_device = 0;
+
+    g_blob_pool_allocator.clear();
+    g_workspace_pool_allocator.clear();
+
+#if NCNN_VULKAN
+    if (use_vulkan_compute)
+    {
+        std::cout<< "Using vulkan?: " <<use_vulkan_compute <<std::endl;
+
+        g_vkdev = ncnn::get_gpu_device(gpu_device);
+        g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
+        g_staging_vkallocator = new ncnn::VkStagingAllocator(g_vkdev);
+
+        g_blob_vkallocator->clear();
+        g_staging_vkallocator->clear();
+    }
+#endif // NCNN_VULKAN
+
+    ncnn::Option opt = optGPU(use_vulkan_compute, gpu_device);
 
     std::string model_path = ".";
-    bool useGPU = true;
+    std::string model_name = "candy";
 
-    bool use_vulkan_compute = false;
-    int gpu_device = -1;
-    if (vu.isGPU() & 0 > 1) {
-        use_vulkan_compute = true;
-        gpu_device = 0;
-    }
-    // default options
-    ncnn::Option opt = vu.optGPU(use_vulkan_compute, gpu_device);
+    NeuralStyle nstyle(model_path, model_name, 0, opt, g_vkdev);
     LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
 
-    std::string model_name = "candy";
-    NeuralStyle nstyle(model_path, model_name, 0, opt, g_vkdev);
-
     const int screenWidth = 1300;
-    const int screenHeight = 600;
+    const int screenHeight = 800;
 
     const char *mainTitle = "ncnnRay: Model Studio";
     InitWindow(screenWidth, screenHeight, mainTitle);
@@ -207,7 +218,7 @@ int main() {
 
             if (comboBoxActive + 1 == 1) {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
-                vu.detectFacesAndDrawOnImage(lffd1, vs.imageFrame);
+                lffd1.detectFacesAndDrawOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                              screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
@@ -217,8 +228,8 @@ int main() {
 
             if (comboBoxActive + 1 == 2) {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
-                ImageResize(&vs.imageFrame, vs.imageFrame.width / 2, vs.imageFrame.height / 2);
-                vs.imageFrame =vu.applyStyleOnImage(nstyle, vs.imageFrame);
+//                ImageResize(&vs.imageFrame, vs.imageFrame.width / 2, vs.imageFrame.height / 2);
+                vs.imageFrame =nstyle.applyStyleOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                              screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
