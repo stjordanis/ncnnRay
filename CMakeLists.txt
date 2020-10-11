@@ -64,8 +64,6 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 # Set this to the minimal version you want to support
 find_package(raylib 3.0 QUIET) # Let CMake search for a raylib-config.cmake
 
-# You could change the QUIET above to REQUIRED and remove this if() clause
-# This part downloads raylib and builds it if it's not installed on your system
 if (NOT raylib_FOUND) # If there's none, fetch and build raylib
     include(FetchContent)
     FetchContent_Declare(

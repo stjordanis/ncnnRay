@@ -25,12 +25,20 @@ void handleImageScaling(const int screenWidth, const int screenHeight, const Ima
 int main() {
 
     int numGPU=0;
-    VisionUtils VU = VisionUtils();
+    VisionUtils vu = VisionUtils();
 
     std::string model_path = ".";
     bool useGPU = true;
 
-    LFFD lffd1(model_path, 8, 0, useGPU);
+    bool use_vulkan_compute=false;
+    int gpu_device = -1;
+    if (vu.isGPU() & 0>1) {
+        use_vulkan_compute = true;
+        gpu_device = 0;
+    }
+    // default options
+    ncnn::Option opt=vu.optGPU(use_vulkan_compute,gpu_device);
+    LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
 
     const int screenWidth = 1300;
     const int screenHeight = 600;
@@ -188,7 +196,7 @@ int main() {
 
             if (comboBoxActive + 1 == 1) {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
-                VU.detectFacesAndDrawOnImage(lffd1, vs.imageFrame);
+                vu.detectFacesAndDrawOnImage(lffd1, vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,imageScale, WHITE);
 //                UnloadTexture(vs.tx);

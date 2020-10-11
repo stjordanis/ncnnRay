@@ -21,7 +21,7 @@ typedef struct FaceInfo {
 
 class LFFD {
 public:
-	LFFD(const std::string& model_path, int scale_num, int num_thread_, bool useGPU);
+	LFFD(const std::string& model_path, int scale_num, int num_thread_, const ncnn::Option& opt, ncnn::VulkanDevice* device);
 	~LFFD();
 
 	int detect(ncnn::Mat& img, std::vector<FaceInfo>& face_lis,int resize_h,int resize_w,

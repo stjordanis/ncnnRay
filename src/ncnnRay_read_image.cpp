@@ -5,7 +5,7 @@ int main(int argc, char** argv) {
 
 
     // initialize when app starts
-    vu.getGPU();
+    vu.isGPU();
 //    auto ins=ncnn::create_gpu_instance();// line1
 //    std::cout<<"GPU instance=?:" << ins <<std::endl;;
 //    auto g= ncnn::get_gpu_device(0);

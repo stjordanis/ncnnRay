@@ -1,7 +1,11 @@
 #include "LFFD.h"
 
-LFFD::LFFD(const std::string& model_path, int scale_num, int num_thread_, bool useGPU)
+LFFD::LFFD(const std::string& model_path, int scale_num, int num_thread_,
+           const ncnn::Option& opt,
+           ncnn::VulkanDevice* device)
 {
+    lffd.opt=opt;
+
 	num_output_scales = scale_num;
 	num_thread = num_thread_;
 	if (num_output_scales == 5) {
@@ -49,10 +53,17 @@ LFFD::LFFD(const std::string& model_path, int scale_num, int num_thread_, bool u
 
 
 
-    // enable vulkan compute feature before loading
-    if (useGPU) {
-        lffd.opt.use_vulkan_compute = true;
+#if NCNN_VULKAN
+    if (lffd.opt.use_vulkan_compute)
+    {
+        lffd.set_vulkan_device(device);
     }
+#endif // NCNN_VULKAN
+
+    // enable vulkan compute feature before loading
+//    if (useGPU) {
+//        lffd.opt.use_vulkan_compute = true;
+//    }
 	lffd.load_param(param_file_name.data());
 	lffd.load_model(bin_file_name.data());
 	std::cout <<"model loaded, GPU enabled?=" << lffd.opt.use_vulkan_compute << std::endl;

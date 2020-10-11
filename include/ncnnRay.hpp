@@ -64,12 +64,34 @@
 #include "cpu.h"
 #include "net.h"
 
-#if NCNN_VULKAN
+#include "cpu.h"
+#include "datareader.h"
+#include "net.h"
 #include "gpu.h"
-#endif
+
+//#if NCNN_VULKAN
+//#include "gpu.h"
+//#endif
 
 #include "models/LFFD.h"
 //############################################ ncnn ##########################################
+
+
+static ncnn::UnlockedPoolAllocator g_blob_pool_allocator;
+static ncnn::PoolAllocator g_workspace_pool_allocator;
+
+#if NCNN_VULKAN
+static ncnn::VulkanDevice* g_vkdev = 0;
+static ncnn::VkAllocator* g_blob_vkallocator = 0;
+static ncnn::VkAllocator* g_staging_vkallocator = 0;
+#endif // NCNN_VULKAN
+
+//class GlobalGpuInstance
+//{
+//public:
+//    GlobalGpuInstance() { ncnn::create_gpu_instance(); }
+//    ~GlobalGpuInstance() { ncnn::destroy_gpu_instance(); }
+//};
 
 using namespace std;
 using namespace std::chrono;
@@ -83,7 +105,8 @@ public:
     Image ncnnToRayImage(ncnn::Mat  &tensor);
     void detectFacesAndExportImage(LFFD &lffd, const string &fileName);
     void detectFacesAndDrawOnImage(LFFD &lffd, Image &image);
-    int getGPU();
+    ncnn::Option optGPU(bool use_vulkan_compute, int gpu_device);
+    int isGPU();
 
 };
 
@@ -92,14 +115,38 @@ VisionUtils::VisionUtils() {}
 int VisionUtils::tensorDIMS(const ncnn::Mat &tensor){
     return tensor.dims;
 }
+ncnn::Option VisionUtils::optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
+    ncnn::Option opt;
+    opt.lightmode = true;
+    opt.num_threads = 4;
+    opt.blob_allocator = &g_blob_pool_allocator;
+    opt.workspace_allocator = &g_workspace_pool_allocator;
+    opt.use_vulkan_compute=false;
+    #if NCNN_VULKAN
+    if (use_vulkan_compute && gpu_device >-1)
+    {
+        TraceLog(LOG_INFO, "ncnnRay: use_vulkan_compute:%i", use_vulkan_compute);
+        opt.use_vulkan_compute=true;
+        g_vkdev = ncnn::get_gpu_device(gpu_device);
+        g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
+        g_staging_vkallocator = new ncnn::VkStagingAllocator(g_vkdev);
+        opt.blob_vkallocator = g_blob_vkallocator;
+        opt.workspace_vkallocator = g_blob_vkallocator;
+        opt.staging_vkallocator = g_staging_vkallocator;
+    }
+    #endif // NCNN_VULKAN
+    return opt;
+}
 
-int VisionUtils::getGPU() {
+
+
+int VisionUtils::isGPU() {
     // initialize when app starts
-//    int ins=ncnn::get_gpu_count();
-    int ins=ncnn::create_gpu_instance();
+    int ins=ncnn::get_gpu_count();
+//    int ins=ncnn::create_gpu_instance();
     std::cout<<"GPU instance=?:" << ins<<std::endl;;
-    auto g= ncnn::get_gpu_device(0);
-    std::cout<<"GPU Device=?:" << g <<std::endl;;
+//    auto g= ncnn::get_gpu_device(0);
+//    std::cout<<"GPU Device=?:" << g <<std::endl;;
     return ins;
 }
 
@@ -172,8 +219,8 @@ void VisionUtils::detectFacesAndDrawOnImage(LFFD &lffd, Image &image) {
     ncnn::Mat inmat = rayImageToNcnn(image);
     cout << "Total:" << inmat.total() << endl;
     cout << "D:" << tensorDIMS(inmat) << endl;;
-    lffd.detect(inmat, face_info, 240, 320);
-//    lffd.detect(inmat, face_info, image.height, image.width);
+//    lffd.detect(inmat, face_info, 240, 320);
+    lffd.detect(inmat, face_info, image.height, image.width);
 
     cout << "Face detections:" << face_info.size() << endl;;
     ImageDrawRectangle(&image, 5, 20, 20, 20, DARKPURPLE);
