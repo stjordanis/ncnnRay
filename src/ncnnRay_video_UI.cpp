@@ -45,6 +45,9 @@ int main() {
     ncnn::Option opt = vu.optGPU(use_vulkan_compute, gpu_device);
     LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
 
+    std::string model_name = "candy";
+    NeuralStyle nstyle(model_path, model_name, 0, opt, g_vkdev);
+
     const int screenWidth = 1300;
     const int screenHeight = 600;
 
@@ -195,7 +198,7 @@ int main() {
         comboBoxActive = GuiComboBox(
                 Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 9 * padding, buttonWidth + 35,
                           buttonHeight},
-                "LFFD;ULTRA", comboBoxActive);
+                "LFFD;CANDY", comboBoxActive);
         animate = (GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 8 * padding, 20, 20},
                                "Animate", animate));
 
@@ -212,12 +215,25 @@ int main() {
 //                UnloadTexture(vs.tx);
             }
 
+            if (comboBoxActive + 1 == 2) {
+//                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
+                ImageResize(&vs.imageFrame, vs.imageFrame.width / 2, vs.imageFrame.height / 2);
+                vs.imageFrame =vu.applyStyleOnImage(nstyle, vs.imageFrame);
+                vs.tx = LoadTextureFromImage(vs.imageFrame);
+                DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
+                                             screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
+                              imageScale, WHITE);
+//                UnloadTexture(vs.tx);
+            }
+
             ImageColorContrast(&vs.imageFrame, 10.0);
             vs.tx = LoadTextureFromImage(vs.imageFrame);
             DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                          screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f, imageScale,
                           WHITE);
         }
+
+
         GuiEnable();
         EndDrawing();
     }

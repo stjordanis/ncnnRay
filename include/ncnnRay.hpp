@@ -87,12 +87,6 @@ static ncnn::VkAllocator* g_blob_vkallocator = 0;
 static ncnn::VkAllocator* g_staging_vkallocator = 0;
 #endif // NCNN_VULKAN
 
-//class GlobalGpuInstance
-//{
-//public:
-//    GlobalGpuInstance() { ncnn::create_gpu_instance(); }
-//    ~GlobalGpuInstance() { ncnn::destroy_gpu_instance(); }
-//};
 
 using namespace std;
 using namespace std::chrono;
@@ -123,10 +117,12 @@ ncnn::Option VisionUtils::optGPU(bool use_vulkan_compute=false, int gpu_device=-
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
     opt.use_vulkan_compute=false;
-    #if NCNN_VULKAN
+//    #if NCNN_VULKAN
     if (use_vulkan_compute && gpu_device >-1)
     {
         TraceLog(LOG_INFO, "ncnnRay: use_vulkan_compute:%i", use_vulkan_compute);
+//        ncnn::create_gpu_instance();
+
         opt.use_vulkan_compute=true;
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
@@ -135,7 +131,7 @@ ncnn::Option VisionUtils::optGPU(bool use_vulkan_compute=false, int gpu_device=-
         opt.workspace_vkallocator = g_blob_vkallocator;
         opt.staging_vkallocator = g_staging_vkallocator;
     }
-    #endif // NCNN_VULKAN
+//    #endif // NCNN_VULKAN
     return opt;
 }
 
@@ -144,7 +140,6 @@ ncnn::Option VisionUtils::optGPU(bool use_vulkan_compute=false, int gpu_device=-
 int VisionUtils::isGPU() {
     // initialize when app starts
     int ins=ncnn::get_gpu_count();
-//    int ins=ncnn::create_gpu_instance();
     std::cout<<"GPU instance=?:" << ins<<std::endl;;
 //    auto g= ncnn::get_gpu_device(0);
 //    std::cout<<"GPU Device=?:" << g <<std::endl;;

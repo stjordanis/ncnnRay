@@ -148,6 +148,8 @@ add_executable(${EXAMPLE_009_EXE} src/${EXAMPLE_009_EXE}.cpp
         include/pl_mpeg/pl_mpeg.h
         src/models/LFFD.cpp
         src/models/LFFD.h
+        src/models/neural.cpp
+        src/models/neural.h
         )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_009_EXE} raylib  ncnn)
