@@ -87,6 +87,31 @@ set(NCNN_DEVICE "cpu")
 ```
 **Note**: Tested only on **GPU with CUDA 10.2 and a CPU on a Windows 10 machine**. 
 
+## Vulkan
+Vulkan is Khronos' API for High-efficiency Graphics and Compute on GPUs. 
+
+In analogy to PyTorch which uses CUDA behind the scenes to allocate tensors on a GPU, ncnn uses the Vulkan SDK and shaders to do the same. 
+**To use Vulkan backend** during CMake build, install Vulkan header files, a vulkan driver loader, GLSL to SPIR-V 
+compiler and vulkaninfo tool. Preferably from your distribution repositories. Alternatively download and install full Vulkan SDK 
+(about 200MB in size; it contains all header files, documentation and prebuilt loader, 
+as well some extra tools and source code of everything) from https://vulkan.lunarg.com/sdk/home
+
+**To use Vulkan after building ncnn**  you will also need to have Vulkan driver for your GPU. 
+For AMD and Intel GPUs these can be found in Mesa graphics driver, which usually is installed by default on 
+all distros. 
+For Nvidia GPUs the propietary Nvidia driver must be downloaded and installed 
+After installing Vulkan driver, confirm Vulkan libraries and driver are working, 
+by using vulkaninfo it should list GPU device type. For instance:
+````bash
+VkPhysicalDeviceDriverProperties:
+---------------------------------
+driverID           = DRIVER_ID_NVIDIA_PROPRIETARY
+driverName         = NVIDIA
+driverInfo         = 452.28
+conformanceVersion = 1.2.3.1
+```` 
+ 
+
 ## RayLib 
 rayLib is an amazing library which has been widely adopted by the gaming community. 
 Read more about the raylib game framework here: https://www.raylib.com/
