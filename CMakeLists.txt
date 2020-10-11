@@ -122,7 +122,7 @@ set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_003_EXE ${PROJECT_NAME}_random)
+set(EXAMPLE_003_EXE ${PROJECT_NAME}_face_detect_UI)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp
         src/models/LFFD.cpp src/models/LFFD.h

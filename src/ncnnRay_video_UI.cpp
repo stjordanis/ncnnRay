@@ -4,11 +4,16 @@
 //#pragma warning( disable : 4576 )
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_RICONS
+
 #include "../include/raygui/raygui.h"
+
 #pragma warning( pop )
+
 #include "../bin64/_deps/raylib-src/src/external/glad.h"
 #include "../include/raygui/ricons.h"
+
 #define PL_MPEG_IMPLEMENTATION
+
 #include "../include/pl_mpeg/pl_mpeg.h"
 
 Font gamefont;
@@ -24,20 +29,20 @@ void handleImageScaling(const int screenWidth, const int screenHeight, const Ima
 
 int main() {
 
-    int numGPU=0;
+    int numGPU = 0;
     VisionUtils vu = VisionUtils();
 
     std::string model_path = ".";
     bool useGPU = true;
 
-    bool use_vulkan_compute=false;
+    bool use_vulkan_compute = false;
     int gpu_device = -1;
-    if (vu.isGPU() & 0>1) {
+    if (vu.isGPU() & 0 > 1) {
         use_vulkan_compute = true;
         gpu_device = 0;
     }
     // default options
-    ncnn::Option opt=vu.optGPU(use_vulkan_compute,gpu_device);
+    ncnn::Option opt = vu.optGPU(use_vulkan_compute, gpu_device);
     LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
 
     const int screenWidth = 1300;
@@ -49,7 +54,7 @@ int main() {
     Sound clickSound = LoadSound("save.ogg");
     Sound saveImageSound = LoadSound("click.ogg");
 
-    const char * torchStyle="torch2.rgs";
+    const char *torchStyle = "torch2.rgs";
     GuiLoadStyle(torchStyle);
     GuiFade(0.9f);
     GuiSetStyle(DEFAULT, TEXT_SPACING, 1);
@@ -73,15 +78,15 @@ int main() {
         plm_t *plm = NULL;
         int w;
         int h;
-        double num_pixels=0.0;
-        long currentFrame=1;
+        double num_pixels = 0.0;
+        long currentFrame = 1;
         Texture2D tx = {0};
-        Image imageFrame={0};
+        Image imageFrame = {0};
         plm_frame_t *frame = NULL;
-        double dur=-1.0;
+        double dur = -1.0;
     };
 
-    videoState vs={0};
+    videoState vs = {0};
 
     float imageScale = 1.0f;
     float randomSeed = 0;
@@ -106,7 +111,7 @@ int main() {
         BeginDrawing();
         ClearBackground(DARKGRAY);
         DrawFPS(10, 10);
-        DrawTextEx(GuiGetFont(),mainTitle,Vector2 { 10, 40},19,1.0f,WHITE);
+        DrawTextEx(GuiGetFont(), mainTitle, Vector2{10, 40}, 19, 1.0f, WHITE);
 
         if (IsFileDropped()) {
             int fileCount = 0;
@@ -118,17 +123,17 @@ int main() {
 //                        plm_destroy(vs.plm); // Free the old video
 //                    }
 //                    vs={0};// Throw the old one if it exists
-                    vs.videoFileName= droppedFiles[0];
+                    vs.videoFileName = droppedFiles[0];
                     TraceLog(LOG_DEBUG, "ncnnRay: video:%s", vs.videoFileName.c_str());
                     vs.plm = plm_create_with_filename(vs.videoFileName.c_str());
                     if (!vs.plm) {
                         std::cout << "Couldn't open file:" << vs.videoFileName << std::endl;
-                    }
-                    else{
-                        TraceLog(LOG_DEBUG, "ncnnRay: video:%s opened - frame:%d", vs.videoFileName.c_str(),plm_get_duration(vs.plm));
+                    } else {
+                        TraceLog(LOG_DEBUG, "ncnnRay: video:%s opened - frame:%d", vs.videoFileName.c_str(),
+                                 plm_get_duration(vs.plm));
                     }
                     plm_set_audio_enabled(vs.plm, FALSE);
-                    vs.dur= plm_get_duration(vs.plm);
+                    vs.dur = plm_get_duration(vs.plm);
                     vs.w = plm_get_width(vs.plm);
                     vs.h = plm_get_height(vs.plm);
                     vs.num_pixels = vs.w * vs.h;
@@ -140,27 +145,28 @@ int main() {
 
         if (vs.tx.id > 0) {
             DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
-                                           screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
+                                         screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
                           imageScale, WHITE);
             DrawRectangleLinesEx(imageRec, 1,
                                  CheckCollisionPointRec(GetMousePosition(), imageRec) ? RED : DARKGRAY);
             DrawText(FormatText("SCALE: %.2f%%", imageScale * 100.0f), 10, screenHeight - 60, 20, defTextCLR);
 
         } else {
-            DrawTextEx(GuiGetFont(),"NCNN MODEL STUDIO: DRAG & DROP A VIDEO.",Vector2 { 10, (float)GetScreenHeight() - 52 },
-                       19,0.0f,WHITE);
+            DrawTextEx(GuiGetFont(), "NCNN MODEL STUDIO: DRAG & DROP A VIDEO.",
+                       Vector2{10, (float) GetScreenHeight() - 52},
+                       19, 0.0f, WHITE);
             GuiDisable();
         }
 
-        if (vs.videoLoaded){
-            if (vs.plm!=nullptr) {
+        if (vs.videoLoaded) {
+            if (vs.plm != nullptr) {
                 vs.frame = plm_decode_video(vs.plm);
-                if (vs.frame!=nullptr) {
-                    TraceLog(LOG_DEBUG, "ncnnRay: decoding- frame:%d",vs.frame->width);
-                    if  (vs.tx.width> 0) {
+                if (vs.frame != nullptr) {
+                    TraceLog(LOG_DEBUG, "ncnnRay: decoding- frame:%d", vs.frame->width);
+                    if (vs.tx.width > 0) {
                         UnloadTexture(vs.tx);
                     }
-                    if  (vs.imageFrame.width> 0) {
+                    if (vs.imageFrame.width > 0) {
                         UnloadImage(vs.imageFrame);
                     }
                     uint8_t *rgb_data = (uint8_t *) malloc(vs.num_pixels * 3);
@@ -174,22 +180,24 @@ int main() {
                     vs.tx = LoadTextureFromImage(vs.imageFrame);
                     vs.currentFrame++;
                 }
-            }
-            else{
+            } else {
                 TraceLog(LOG_ERROR, "ncnnRay: Something fishy is going on ...");
-                animate=false;
+                animate = false;
                 GuiDisable();
 //                vs.videoLoaded= false;
             }
         }
 
         if (!animate) {
-            comboBoxActive=false;
+            comboBoxActive = false;
         }
 
-        comboBoxActive =  GuiComboBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 9*padding, buttonWidth+35, buttonHeight},
-                                      "LFFD;ULTRA", comboBoxActive);
-        animate=(GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 8*padding, 20, 20}, "Animate", animate));
+        comboBoxActive = GuiComboBox(
+                Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 9 * padding, buttonWidth + 35,
+                          buttonHeight},
+                "LFFD;ULTRA", comboBoxActive);
+        animate = (GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 8 * padding, 20, 20},
+                               "Animate", animate));
 
         if (animate && vs.videoLoaded) {
             TraceLog(LOG_DEBUG, "TorchRaLib: Animate");
@@ -198,13 +206,17 @@ int main() {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
                 vu.detectFacesAndDrawOnImage(lffd1, vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
-                DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,imageScale, WHITE);
+                DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
+                                             screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
+                              imageScale, WHITE);
 //                UnloadTexture(vs.tx);
             }
 
             ImageColorContrast(&vs.imageFrame, 10.0);
             vs.tx = LoadTextureFromImage(vs.imageFrame);
-            DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,imageScale, WHITE);
+            DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
+                                         screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f, imageScale,
+                          WHITE);
         }
         GuiEnable();
         EndDrawing();
