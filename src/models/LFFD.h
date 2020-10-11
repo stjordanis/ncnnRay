@@ -21,8 +21,7 @@ typedef struct FaceInfo {
 
 class LFFD {
 public:
-    LFFD(const std::string &model_path, int scale_num, int num_thread_, const ncnn::Option &opt,
-         ncnn::VulkanDevice *device);
+    LFFD(const std::string &model_path, int scale_num, int num_thread_, const ncnn::Option &opt,ncnn::VulkanDevice *device);
 
     ~LFFD();
 

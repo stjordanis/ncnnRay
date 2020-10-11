@@ -152,12 +152,35 @@ add_executable(${EXAMPLE_009_EXE} src/${EXAMPLE_009_EXE}.cpp
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_009_EXE} raylib  ncnn)
 #target_link_libraries(${PROJECT_NAME} m)
-target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+target_include_directories(${EXAMPLE_009_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
 set_target_properties(${EXAMPLE_009_EXE} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED YES)
 #target_compile_options(${EXAMPLE_009_EXE} PRIVATE /wd4267 /wd4244 /wd4996)
 ################# EXAMPLE 006 ########################
+
+
+################# EXAMPLE 006 ########################
+# TARGET
+set(EXAMPLE_0011_EXE ${PROJECT_NAME}_neural)
+#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+add_executable(${EXAMPLE_0011_EXE} src/${EXAMPLE_0011_EXE}.cpp
+        include/ncnnRay.hpp
+        src/models/neural.cpp
+        src/models/neural.h
+        src/models/LFFD.cpp
+        src/models/LFFD.h
+        )
+set(raylib_VERBOSE 1)
+target_link_libraries(${EXAMPLE_0011_EXE} raylib  ncnn)
+#target_link_libraries(${PROJECT_NAME} m)
+target_include_directories(${EXAMPLE_0011_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+set_target_properties(${EXAMPLE_0011_EXE} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES)
+#target_compile_options(${EXAMPLE_009_EXE} PRIVATE /wd4267 /wd4244 /wd4996)
+################# EXAMPLE 006 ########################
+
 
 #add_executable(ncnn_ultraface src/ultra.cpp src/UltraFace.cpp)
 #target_link_libraries(ncnn_ultraface ncnn)
@@ -191,6 +214,7 @@ file(COPY "resources/bjork-all-is-full-of-love.mpg" DESTINATION ${CMAKE_SOURCE_D
 
 #file(COPY "resources/torch.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/torch2.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/mosaic.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 
 
 

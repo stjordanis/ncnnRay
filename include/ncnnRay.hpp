@@ -74,6 +74,7 @@
 //#endif
 
 #include "models/LFFD.h"
+#include "models/neural.h"
 //############################################ ncnn ##########################################
 
 
@@ -107,7 +108,7 @@ public:
     void detectFacesAndDrawOnImage(LFFD &lffd, Image &image);
     ncnn::Option optGPU(bool use_vulkan_compute, int gpu_device);
     int isGPU();
-
+    Image applyStyleOnImage(NeuralStyle &mdl, Image &image);
 };
 
 VisionUtils::VisionUtils() {}
@@ -210,8 +211,8 @@ void VisionUtils::detectFacesAndExportImage(LFFD &lffd, const string &fileName) 
     }
     string exportFile=fileName + ".exp.png";
     ExportImage(image, exportFile.c_str());
-    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
-    Texture2D texture = LoadTextureFromImage(image);
+//    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
+//    Texture2D texture = LoadTextureFromImage(image);
 }
 
 void VisionUtils::detectFacesAndDrawOnImage(LFFD &lffd, Image &image) {
@@ -237,3 +238,16 @@ void VisionUtils::detectFacesAndDrawOnImage(LFFD &lffd, Image &image) {
 //    ExportImage(image, exportFile.c_str());
 }
 
+Image VisionUtils::applyStyleOnImage(NeuralStyle &mdl, Image &image) {
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    cout << "Total:" << inmat.total() << endl;
+    cout << "D:" << tensorDIMS(inmat) << endl;;
+//    lffd0.detect(inmat, face_info, 240, 320);
+    ncnn::Mat out=mdl.transform(inmat);
+//    lffd.detect(inmat, face_info, 240, 320);
+
+    Image saveImage =ncnnToRayImage(out);
+    return saveImage;
+//    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
+//    Texture2D texture = LoadTextureFromImage(image);
+}
