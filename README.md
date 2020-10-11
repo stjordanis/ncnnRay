@@ -60,6 +60,16 @@ Real-time face detection on a CPU:
      <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a>              
       </td>              
    </tr>                 
+   
+   <tr>          
+    <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/amber.png_mosaic_cpp.pt-out.png?raw=true' width="600px"></td>
+    <td>NeuralStyle</td>              
+    <td> <a href="https://github.com/nihui/ncnn-android-styletransfer">Credit ncnn C++</a> </td>         
+    <td> CPU / Vulkan GPU</td>         
+    <td> <a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style</a>              
+     </td>              
+  </tr>
+      
  </table>
  </div>
 
