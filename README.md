@@ -44,7 +44,7 @@ This would open the door to thousands of opportunities!.
 
 Real-time face detection on a CPU:
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces01.gif?raw=true" width="55%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/anim01.gif?raw=true" width="55%"></a>  
 </h1>
 
 
