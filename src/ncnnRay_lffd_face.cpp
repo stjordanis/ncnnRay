@@ -10,9 +10,8 @@ int main() {
 //    g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
-    if (use_vulkan_compute)
-    {
-        std::cout<< "Using vulkan?: " <<use_vulkan_compute <<std::endl;
+    if (use_vulkan_compute) {
+        std::cout << "Using vulkan?: " << use_vulkan_compute << std::endl;
 
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
@@ -31,7 +30,7 @@ int main() {
     LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
 //    ImageResize(&image, image.width / 2, image.height / 2);
-    lffd1.detectFacesAndDrawOnImage( image);
+    lffd1.detectFacesAndDrawOnImage(image);
     ExportImage(image, "manga-ncnn-rgb.png");
 
 }

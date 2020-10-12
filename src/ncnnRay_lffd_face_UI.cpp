@@ -11,9 +11,8 @@ int main(int argc, char *argv[]) {
     g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
-    if (use_vulkan_compute)
-    {
-        std::cout<< "Using vulkan?: " <<use_vulkan_compute <<std::endl;
+    if (use_vulkan_compute) {
+        std::cout << "Using vulkan?: " << use_vulkan_compute << std::endl;
 
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
@@ -28,19 +27,20 @@ int main(int argc, char *argv[]) {
     std::string model_path = ".";
     std::string fileName = "manga.png";
 
-    LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
-    lffd1.detectFacesAndExportImage( fileName);
+    LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
+//    lffd1.detectFacesAndExportImage(fileName);
 
     const int screenWidth = 1200;
     const int screenHeight = 800;
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
+    lffd1.detectFacesAndDrawOnImage(image);
     ImageResize(&image, image.width / 2, image.height / 2);
+
     InitWindow(screenWidth, screenHeight, "random values (c++17)");
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        lffd1.detectFacesAndDrawOnImage(image);
 //        ImageFormat(&image, UNCOMPRESSED_R8G8B8A8);
         Texture2D texture = LoadTextureFromImage(image);
         DrawTexture(texture, screenHeight / 2 - texture.width / 2, screenHeight / 2 - texture.height / 2, WHITE);

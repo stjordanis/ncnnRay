@@ -21,9 +21,8 @@ int main(int argc, char *argv[]) {
     g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
-    if (use_vulkan_compute)
-    {
-        std::cout<< "Using vulkan?: " <<use_vulkan_compute <<std::endl;
+    if (use_vulkan_compute) {
+        std::cout << "Using vulkan?: " << use_vulkan_compute << std::endl;
 
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);

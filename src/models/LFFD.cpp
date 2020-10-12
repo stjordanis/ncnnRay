@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void LFFD::detectFacesAndExportImage( const string &fileName) {
+void LFFD::detectFacesAndExportImage(const string &fileName) {
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
     vector<FaceInfo> face_info;
     ncnn::Mat inmat = rayImageToNcnn(image);
@@ -19,17 +19,17 @@ void LFFD::detectFacesAndExportImage( const string &fileName) {
     for (int i = 0; i < face_info.size(); i++) {
         cout << "Iteration:" << i << endl;;
         auto face = face_info[i];
-        Rectangle rect ={face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
-        ImageDrawRectangleLines(&image, rect,5, RED);
-        ImageDrawCircleV(&image, Vector2 {(float)face.x1, (float)face.y1}, 5, BLUE);
+        Rectangle rect = {face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&image, rect, 5, RED);
+        ImageDrawCircleV(&image, Vector2{(float) face.x1, (float) face.y1}, 5, BLUE);
     }
-    string exportFile=fileName + ".exp.png";
+    string exportFile = fileName + ".exp.png";
     ExportImage(image, exportFile.c_str());
 //    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
 //    Texture2D texture = LoadTextureFromImage(image);
 }
 
-void LFFD::detectFacesAndDrawOnImage( Image &image) {
+void LFFD::detectFacesAndDrawOnImage(Image &image) {
     vector<FaceInfo> face_info;
     ncnn::Mat inmat = rayImageToNcnn(image);
     cout << "Total:" << inmat.total() << endl;
@@ -99,11 +99,11 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
     }
 
 
-    #if NCNN_VULKAN
+#if NCNN_VULKAN
     if (lffd.opt.use_vulkan_compute) {
         lffd.set_vulkan_device(device);
     }
-    #endif // NCNN_VULKAN
+#endif // NCNN_VULKAN
 
 
     lffd.load_param(param_file_name.data());

@@ -55,9 +55,12 @@
 //############################################ ncnn ##########################################
 #include <float.h>
 #include <stdio.h>
+
 #ifdef _WIN32
+
 #include <algorithm>
 #include <windows.h> // Sleep()
+
 #else
 #include <unistd.h> // sleep()
 #endif
@@ -87,9 +90,9 @@ static ncnn::UnlockedPoolAllocator g_blob_pool_allocator;
 static ncnn::PoolAllocator g_workspace_pool_allocator;
 
 #if NCNN_VULKAN
-static ncnn::VulkanDevice* g_vkdev = 0;
-static ncnn::VkAllocator* g_blob_vkallocator = 0;
-static ncnn::VkAllocator* g_staging_vkallocator = 0;
+static ncnn::VulkanDevice *g_vkdev = 0;
+static ncnn::VkAllocator *g_blob_vkallocator = 0;
+static ncnn::VkAllocator *g_staging_vkallocator = 0;
 #endif // NCNN_VULKAN
 
 using namespace std;
@@ -107,11 +110,11 @@ using namespace std;
 
 //VisionUtils::VisionUtils() {}
 
-static int tensorDIMS(const ncnn::Mat &tensor){
+static int tensorDIMS(const ncnn::Mat &tensor) {
     return tensor.dims;
 }
 
-static ncnn::Option optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
+static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1) {
     ncnn::Option opt;
     opt.lightmode = true;
     opt.num_threads = 4;
@@ -131,13 +134,12 @@ static ncnn::Option optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
 //    opt.use_shader_pack8 = false;
 //    opt.use_image_storage = false;
 
-    opt.use_vulkan_compute=use_vulkan_compute;
+    opt.use_vulkan_compute = use_vulkan_compute;
 //    #if NCNN_VULKAN
-    if (use_vulkan_compute && gpu_device >-1)
-    {
+    if (use_vulkan_compute && gpu_device > -1) {
         TraceLog(LOG_INFO, "ncnnRay: use_vulkan_compute:%i", use_vulkan_compute);
 //        ncnn::create_gpu_instance();
-        opt.use_vulkan_compute=true;
+        opt.use_vulkan_compute = true;
 
         opt.blob_vkallocator = g_blob_vkallocator;
         opt.workspace_vkallocator = g_blob_vkallocator;
@@ -149,11 +151,10 @@ static ncnn::Option optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
 }
 
 
-
 static int isGPU() {
     // initialize when app starts
-    int ins=ncnn::get_gpu_count();
-    std::cout<<"GPU instance=?:" << ins<<std::endl;;
+    int ins = ncnn::get_gpu_count();
+    std::cout << "GPU instance=?:" << ins << std::endl;;
 //    auto g= ncnn::get_gpu_device(0);
 //    std::cout<<"GPU Device=?:" << g <<std::endl;;
     return ins;
@@ -174,9 +175,9 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
     std::memcpy(pointer, imagePointer, dataSize);
 //    error C2664: 'ncnn::Mat ncnn::Mat::from_pixels(const unsigned char *,int,int,int,ncnn::Allocator *)': cannot convert argument 1 from 'void *const ' to 'const unsigned char *'
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
-    int type=ncnn::Mat::PIXEL_RGB;
-    if  (bytesPerPixel ==4){
-         type=ncnn::Mat::PIXEL_RGBA2RGB;
+    int type = ncnn::Mat::PIXEL_RGB;
+    if (bytesPerPixel == 4) {
+        type = ncnn::Mat::PIXEL_RGBA2RGB;
     }
 //    PIXEL_RGB = 1,
 //    PIXEL_BGR = 2,
@@ -186,17 +187,18 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
 
 //    TraceLog(LOG_INFO, "ncnnRay: type:%i", type);
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGB, width, height);
-    ncnn::Mat tensor = ncnn::Mat::from_pixels((const unsigned char*)image.data, type, width, height);
+    ncnn::Mat tensor = ncnn::Mat::from_pixels((const unsigned char *) image.data, type, width, height);
 
     TraceLog(LOG_INFO, "ncnnRay: final T dims:%i", tensor.shape().dims);
 //    delete[] pointer;
     return tensor;
 }
 
-static Image ncnnToRayImage(ncnn::Mat  &tensor) {
+static Image ncnnToRayImage(ncnn::Mat &tensor) {
     size_t width = tensor.w;
     size_t height = tensor.h;
-    unsigned char* torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(3 * height * width * sizeof(unsigned char)));
+    unsigned char *torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(
+            3 * height * width * sizeof(unsigned char)));
     tensor.to_pixels(torchPointer, ncnn::Mat::PIXEL_RGB);
 //    return Image{0};
     return Image{

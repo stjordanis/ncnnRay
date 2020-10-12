@@ -49,8 +49,7 @@
 
 static ncnn::Net styletransfernet[5];
 
-void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& opt)
-{
+void benchmark(const char *comment, const ncnn::Mat &_in, const ncnn::Option &opt) {
     ncnn::Mat in = _in;
     in.fill(0.01f);
 
@@ -58,8 +57,7 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
-    if (opt.use_vulkan_compute)
-    {
+    if (opt.use_vulkan_compute) {
         g_blob_vkallocator->clear();
         g_staging_vkallocator->clear();
     }
@@ -71,8 +69,7 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     net.opt = opt;
 
 #if NCNN_VULKAN
-    if (net.opt.use_vulkan_compute)
-    {
+    if (net.opt.use_vulkan_compute) {
         net.set_vulkan_device(g_vkdev);
     }
 #endif // NCNN_VULKAN
@@ -81,10 +78,9 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
 //    sprintf(parampath, "%s.param", comment);
 
     net.load_param(styletransfer_param_bin);
-    std::string bin =  "./candy.bin";
+    std::string bin = "./candy.bin";
     net.load_model(bin.data());
-    if (g_enable_cooling_down)
-    {
+    if (g_enable_cooling_down) {
         // sleep 10 seconds for cooling down SOC  :(
 #ifdef _WIN32
         Sleep(10 * 1000);
@@ -103,8 +99,7 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     ncnn::Mat out;
 
     // warm up
-    for (int i = 0; i < g_warmup_loop_count; i++)
-    {
+    for (int i = 0; i < g_warmup_loop_count; i++) {
         ncnn::Extractor ex = net.create_extractor();
         ex.input(styletransfer_param_id::BLOB_input1, in);
         ex.extract(styletransfer_param_id::BLOB_output1, out);
@@ -114,8 +109,7 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     double time_max = -DBL_MAX;
     double time_avg = 0;
 
-    for (int i = 0; i < g_loop_count; i++)
-    {
+    for (int i = 0; i < g_loop_count; i++) {
         double start = ncnn::get_current_time();
 
         {
@@ -138,15 +132,14 @@ void benchmark(const char* comment, const ncnn::Mat& _in, const ncnn::Option& op
     fprintf(stderr, "%20s  min = %7.2f  max = %7.2f  avg = %7.2f\n", comment, time_min, time_max, time_avg);
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
     int loop_count = 4;
     int num_threads = ncnn::get_cpu_count();
     int powersave = 0;
     int gpu_device = -1;
     int cooling_down = 1;
 
-    gpu_device=0;
+    gpu_device = 0;
     bool use_vulkan_compute = gpu_device != -1;
     g_enable_cooling_down = cooling_down != 0;
     g_loop_count = loop_count;
@@ -154,8 +147,7 @@ int main(int argc, char** argv)
     g_workspace_pool_allocator.set_size_compare_ratio(0.5f);
 
 #if NCNN_VULKAN
-    if (use_vulkan_compute)
-    {
+    if (use_vulkan_compute) {
         g_warmup_loop_count = 5;
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
@@ -195,14 +187,14 @@ int main(int argc, char** argv)
     fprintf(stderr, "num_threads = %d\n", num_threads);
     fprintf(stderr, "powersave = %d\n", ncnn::get_cpu_powersave());
     fprintf(stderr, "gpu_device = %d\n", gpu_device);
-    fprintf(stderr, "cooling_down = %d\n", (int)g_enable_cooling_down);
+    fprintf(stderr, "cooling_down = %d\n", (int) g_enable_cooling_down);
 
     // run
 
     std::string fileName = "faces.png";
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
     ImageResize(&image, image.width / 2, image.height / 2);
-    ncnn::Mat in01=rayImageToNcnn(image);
+    ncnn::Mat in01 = rayImageToNcnn(image);
 //    benchmark("squeezenet", ncnn::Mat(227, 227, 3), opt);
     benchmark("nstyle", in01, opt);
 

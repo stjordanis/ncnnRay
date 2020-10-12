@@ -38,9 +38,8 @@ int main() {
     g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
-    if (use_vulkan_compute)
-    {
-        std::cout<< "Using vulkan?: " <<use_vulkan_compute <<std::endl;
+    if (use_vulkan_compute) {
+        std::cout << "Using vulkan?: " << use_vulkan_compute << std::endl;
 
         g_vkdev = ncnn::get_gpu_device(gpu_device);
         g_blob_vkallocator = new ncnn::VkBlobAllocator(g_vkdev);
@@ -229,7 +228,7 @@ int main() {
             if (comboBoxActive + 1 == 2) {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
 //                ImageResize(&vs.imageFrame, vs.imageFrame.width / 2, vs.imageFrame.height / 2);
-                vs.imageFrame =nstyle.applyStyleOnImage(vs.imageFrame);
+                vs.imageFrame = nstyle.applyStyleOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                              screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
