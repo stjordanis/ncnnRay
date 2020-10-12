@@ -1,6 +1,6 @@
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo-anim.gif?raw=true" width="35%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/g-gif-update.gif?raw=true" width="35%"></a>  
 </h1>
 
 <h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform.</h1>
