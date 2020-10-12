@@ -83,7 +83,7 @@ Real-time face detection on a GPU (Vulkan):
  </div>
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/ui01.png?raw=true" width="35%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/ui01.png?raw=true" width="85%"></a>  
 </h1>
 
 # GPU or CPU?  
@@ -97,7 +97,7 @@ CPU mode:
 ```cmake
 set(NCNN_DEVICE "cpu")
 ```
-**Note**: Tested only on **GPU with CUDA 10.2 and a CPU on a Windows 10 machine**. 
+**Note**: Tested only on **GPU with CUDA 10.2 and a CPU on a Windows 10 and Ubuntu 18 machines**. 
 
 ## Vulkan
 Vulkan is Khronos' API for High-efficiency Graphics and Compute on GPUs. 
