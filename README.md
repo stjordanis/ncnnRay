@@ -74,10 +74,17 @@ Real-time face detection on a GPU (Vulkan):
     <td> <a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style</a>              
      </td>              
   </tr>
+  
+  <tr>                         
+      <td> More comming soon</td>                             
+  </tr>
       
  </table>
  </div>
 
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/ui01.png?raw=true" width="35%"></a>  
+</h1>
 
 # GPU or CPU?  
 If you want to test on a CPU you will have to edit the CMakeLists file. ncnn uses the Vulkan SDK for all its GPU operations. 
@@ -125,7 +132,8 @@ https://www.google.com/search?q=raylib+site:github.com
 
 ## Tencent ncnn 
 Written in C++, ncnn has a community that is growing by the day. It compiles on almost every platform and is 
-mainly targeted at egde devices.    
+mainly targeted at egde devices. https://github.com/Tencent/ncnn   
+  
   
 <p align="right">
 <sub>(Preview)</sub>
@@ -135,25 +143,21 @@ mainly targeted at egde devices.
 The folowing example create a ray window, allocates a `ncnn::Mat` on the GPU and draws the value  into a ray window. 
  
 ```cpp
-#include "../include/utils/vision_utils.hpp"
-int main(int argc, char** argv) {
-    VisionUtils vu=VisionUtils(); 
 
-    //RGB
-    Image image = LoadImage("parrots.png");   
-    ncnn::Mat inmat =vu.rayImageToNcnn(image);
-    std::cout<<"Total:" << inmat.total() <<std::endl;
-    std::cout<<"D:" << vu.tensorDIMS (inmat) <<std::endl;;
-    Image saveImage=vu.ncnnToRayImage(inmat);
-    ExportImage(saveImage, "parrots-ncnn-rgb.png");
-    
-    //RGBA
-    Image imageRGBA = LoadImage("windmill.png");   
-    ncnn::Mat inmatimageRGBA =vu.rayImageToNcnn(imageRGBA);
-    std::cout<<"Total:" << inmatimageRGBA.total() <<std::endl;
-    std::cout<<"D:" << vu.tensorDIMS (inmatimageRGBA) <<std::endl;;
-    Image saveImageimageRGBA=vu.ncnnToRayImage(inmatimageRGBA);
-    ExportImage(saveImageimageRGBA, "big-cat-ncnn-rgba.png");    
+int main(int argc, char** argv) {
+    Image image = LoadImage("faces.png");   // Loaded in CPU memory (RAM)
+    ncnn::Mat inmat = rayImageToNcnn(image);
+    std::cout << "Total:" << inmat.total() << std::endl;
+    std::cout << "D:" << tensorDIMS(inmat) << std::endl;;
+    Image saveImage = ncnnToRayImage(inmat);
+    ExportImage(saveImage, "faces-ncnn-rgb.png");
+
+    Image imageRGBA = LoadImage("manga.png");   // Loaded in CPU memory (RAM)
+    ncnn::Mat inmatimageRGBA = rayImageToNcnn(imageRGBA);
+    std::cout << "Total:" << inmatimageRGBA.total() << std::endl;
+    std::cout << "D:" << tensorDIMS(inmatimageRGBA) << std::endl;;
+    Image saveImageimageRGBA = ncnnToRayImage(inmatimageRGBA);
+    ExportImage(saveImageimageRGBA, "manga-ncnn-rgba.png");    
 
     return 0;
 ```
