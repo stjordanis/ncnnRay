@@ -3,7 +3,7 @@
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/g-gif-update.gif?raw=true" width="35%"></a>  
 </h1>
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib and the Tencent ncnn C++ AI platform.</h1>
+<h1 align="center">ncnnRay++: A CMake integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
 
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/raylib_256x256.png?raw=true" width="20%"></a>  
@@ -28,11 +28,9 @@
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="55%"></a>  
 </h1>
   
-**ncnnRay++** is a CMake based **integration** of **_raylib_** and the very popular Tencent ncnn Deep Learning library. 
-ncnn is written in C++ designed (but not only) for edge computing devices. The project depends on the Vulkan SDK (Vulakn is Khronos' API
+**ncnnRay++** is a CMake based **integration** of **_raylib_** (https://www.raylib.com/examples.html) and the very popular 
+ncnn (https://github.com/Tencent/ncnn) Deep Learning library. ncnn is written in C++ designed (but not only) for edge computing devices. The project depends on the Vulkan SDK (Vulakn is Khronos' API
 for Graphics and Compute on GPUs).
-
-ncnnRay solely uses the ncnn project as a universal neural network inference framework.
  
 **There is no OpenCV dependency for reading and writing images / videos or anything else**. Everything is self-contained 
 using stb_image . The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib, all of which are interchangeable.
@@ -40,11 +38,11 @@ For more details, refer to:
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
  
 **Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is already natively supported on WASM. 
-This would open the door to thousands of opportunities!.  
+This would open the door to countless opportunities in creativity.  
 
-Real-time face detection on a CPU:
+Real-time face detection on a GPU (Vulkan):
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/anim01.gif?raw=true" width="55%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/faces02.gif?raw=true" width="55%"></a>  
 </h1>
 
 

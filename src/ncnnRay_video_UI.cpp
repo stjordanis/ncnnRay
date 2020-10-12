@@ -54,8 +54,11 @@ int main() {
 
     std::string model_path = ".";
     std::string model_name = "candy";
+    std::string model_name2 = "mosaic";
 
     NeuralStyle nstyle(model_path, model_name, 0, opt, g_vkdev);
+    NeuralStyle nstyle2(model_path, model_name2, 0, opt, g_vkdev);
+
     LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
 
     const int screenWidth = 1300;
@@ -106,6 +109,7 @@ int main() {
     Rectangle imageRec = {0.0f};
     bool btnExport = false;
     bool animate = false;
+    bool isVulkan = true;
     int comboBoxActive = 0;
     SetTargetFPS(60);
     InitAudioDevice();
@@ -116,8 +120,13 @@ int main() {
     float smallPadding = 40;
     float leftPadding = 160;
 
+    auto statusBarRect = Rectangle{0, (float)GetScreenHeight() - 28, (float)GetScreenWidth(), 28};
+    GuiPanel(Rectangle{0, 0, (float) GetScreenWidth(), (float) GetScreenHeight()});
+
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        const char* statusText = TextFormat("GPU: %s", glGetString(GL_RENDERER)); //
+        GuiStatusBar(statusBarRect, statusText);
 //        handleExport(fileName, image, imageLoaded, btnExport, windowBoxActive, texture);
         handleImageScaling(screenWidth, screenHeight, vs.imageFrame, vs.videoLoaded, imageScale, imageRec);
 
@@ -208,9 +217,12 @@ int main() {
         comboBoxActive = GuiComboBox(
                 Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 9 * padding, buttonWidth + 35,
                           buttonHeight},
-                "LFFD;CANDY", comboBoxActive);
+                "LFFD;CANDY;MOSAIC", comboBoxActive);
         animate = (GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 8 * padding, 20, 20},
                                "Animate", animate));
+
+        isVulkan = (GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 11 * padding, 30, 20},
+                               "Vulkan", isVulkan));
 
         if (animate && vs.videoLoaded) {
             TraceLog(LOG_DEBUG, "TorchRaLib: Animate");
@@ -226,23 +238,30 @@ int main() {
             }
 
             if (comboBoxActive + 1 == 2) {
-//                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
-//                ImageResize(&vs.imageFrame, vs.imageFrame.width / 2, vs.imageFrame.height / 2);
                 vs.imageFrame = nstyle.applyStyleOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                              screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
                               imageScale, WHITE);
-//                UnloadTexture(vs.tx);
             }
 
-            ImageColorContrast(&vs.imageFrame, 10.0);
+            if (comboBoxActive + 1 == 3) {
+                vs.imageFrame = nstyle2.applyStyleOnImage(vs.imageFrame);
+                vs.tx = LoadTextureFromImage(vs.imageFrame);
+                DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
+                                             screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
+                              imageScale, WHITE);
+            }
+
+//            ImageColorContrast(&vs.imageFrame, 10.0);
             vs.tx = LoadTextureFromImage(vs.imageFrame);
             DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
                                          screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f, imageScale,
                           WHITE);
-        }
 
+            statusText = TextFormat("Model# %i", comboBoxActive + 1);
+            GuiStatusBar(statusBarRect, statusText);
+        }
 
         GuiEnable();
         EndDrawing();
