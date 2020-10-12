@@ -1,13 +1,13 @@
 //#include "../include/ncnnRay.hpp"
 #include "models/LFFD.h"
 
-int main(int argc, char *argv[]) {
+int main() {
 
-    bool use_vulkan_compute = false;
+    bool use_vulkan_compute = true;
     int gpu_device = 0;
 
-    g_blob_pool_allocator.clear();
-    g_workspace_pool_allocator.clear();
+//    g_blob_pool_allocator.clear();
+//    g_workspace_pool_allocator.clear();
 
 #if NCNN_VULKAN
     if (use_vulkan_compute)
@@ -24,18 +24,15 @@ int main(int argc, char *argv[]) {
 #endif // NCNN_VULKAN
 
     ncnn::Option opt = optGPU(use_vulkan_compute, gpu_device);
-
     std::string model_path = ".";
     std::string fileName = "manga.png";
+
+
     LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
-
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
-
-    ImageResize(&image, image.width / 2, image.height / 2);
+//    ImageResize(&image, image.width / 2, image.height / 2);
     lffd1.detectFacesAndDrawOnImage( image);
-    ImageFormat(&image, UNCOMPRESSED_R8G8B8A8);
     ExportImage(image, "manga-ncnn-rgb.png");
-
 
 }
 

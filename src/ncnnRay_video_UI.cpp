@@ -57,7 +57,7 @@ int main() {
     std::string model_name = "candy";
 
     NeuralStyle nstyle(model_path, model_name, 0, opt, g_vkdev);
-    LFFD lffd1(model_path, 5, 0, opt, g_vkdev);
+    LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
 
     const int screenWidth = 1300;
     const int screenHeight = 800;

@@ -117,18 +117,19 @@ static ncnn::Option optGPU(bool use_vulkan_compute=false, int gpu_device=-1) {
     opt.num_threads = 4;
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
-    opt.use_winograd_convolution = true;
-    opt.use_sgemm_convolution = true;
-    opt.use_int8_inference = true;
     opt.use_vulkan_compute = use_vulkan_compute;
-    opt.use_fp16_packed = true;
-    opt.use_fp16_storage = true;
-    opt.use_fp16_arithmetic = true;
-    opt.use_int8_storage = true;
-    opt.use_int8_arithmetic = true;
-    opt.use_packing_layout = true;
-    opt.use_shader_pack8 = false;
-    opt.use_image_storage = false;
+
+//    opt.use_winograd_convolution = true;
+//    opt.use_sgemm_convolution = true;
+//    opt.use_int8_inference = true;
+//    opt.use_fp16_packed = true;
+//    opt.use_fp16_storage = true;
+//    opt.use_fp16_arithmetic = true;
+//    opt.use_int8_storage = true;
+//    opt.use_int8_arithmetic = true;
+//    opt.use_packing_layout = true;
+//    opt.use_shader_pack8 = false;
+//    opt.use_image_storage = false;
 
     opt.use_vulkan_compute=use_vulkan_compute;
 //    #if NCNN_VULKAN
@@ -162,10 +163,10 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
     size_t width = image.width;
     size_t height = image.height;
     int dataSize = GetPixelDataSize(width, height, image.format);
-    TraceLog(LOG_INFO, "ncnnRay: total pixels:%i", dataSize);
+    TraceLog(LOG_INFO, "ncnnRay: total image pixels:%i", dataSize);
 
     int bytesPerPixel = dataSize / (width * height);
-    TraceLog(LOG_INFO, "ncnnRay: bytesPerPixel:%i", bytesPerPixel);
+    TraceLog(LOG_INFO, "ncnnRay: image bytesPerPixel:%i", bytesPerPixel);
 //    if (bytesPerPixel==4) bytesPerPixel=3;
 
     auto pointer = new unsigned char[dataSize];
@@ -174,19 +175,21 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
 //    error C2664: 'ncnn::Mat ncnn::Mat::from_pixels(const unsigned char *,int,int,int,ncnn::Allocator *)': cannot convert argument 1 from 'void *const ' to 'const unsigned char *'
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_BGR2RGB, width, height);
     int type=ncnn::Mat::PIXEL_RGB;
-//    if  (bytesPerPixel ==4){
-//         type=ncnn::Mat::PIXEL_RGBA;
-//    }
+    if  (bytesPerPixel ==4){
+         type=ncnn::Mat::PIXEL_RGBA2RGB;
+    }
 //    PIXEL_RGB = 1,
 //    PIXEL_BGR = 2,
 //    PIXEL_GRAY = 3,
 //    PIXEL_RGBA = 4,
 //    PIXEL_BGRA = 5,
 
-    TraceLog(LOG_INFO, "ncnnRay: type:%i", type);
-    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), type, width, height);
+//    TraceLog(LOG_INFO, "ncnnRay: type:%i", type);
+//    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGB, width, height);
+    ncnn::Mat tensor = ncnn::Mat::from_pixels((const unsigned char*)image.data, type, width, height);
+
     TraceLog(LOG_INFO, "ncnnRay: final T dims:%i", tensor.shape().dims);
-    delete[] pointer;
+//    delete[] pointer;
     return tensor;
 }
 

@@ -99,16 +99,13 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
     }
 
 
-#if NCNN_VULKAN
+    #if NCNN_VULKAN
     if (lffd.opt.use_vulkan_compute) {
         lffd.set_vulkan_device(device);
     }
-#endif // NCNN_VULKAN
+    #endif // NCNN_VULKAN
 
-    // enable vulkan compute feature before loading
-//    if (useGPU) {
-//        lffd.opt.use_vulkan_compute = true;
-//    }
+
     lffd.load_param(param_file_name.data());
     lffd.load_model(bin_file_name.data());
     TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", lffd.opt.use_vulkan_compute);

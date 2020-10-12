@@ -20,14 +20,14 @@ public:
 
     ~LFFD();
 
-    int detect(ncnn::Mat &img, std::vector<FaceInfo> &face_lis, int resize_h, int resize_w,
-               float score_threshold = 0.6, float nms_threshold = 0.5, int top_k = 10000,
-               std::vector<int> skip_scale_branch_list = {});
-
     void detectFacesAndExportImage( const string &fileName);
     void detectFacesAndDrawOnImage( Image &image);
 
 private:
+    int detect(ncnn::Mat &img, std::vector<FaceInfo> &face_lis, int resize_h, int resize_w,
+               float score_threshold = 0.6, float nms_threshold = 0.5, int top_k = 10000,
+               std::vector<int> skip_scale_branch_list = {});
+
     void generateBBox(std::vector<FaceInfo> &collection, ncnn::Mat score_map, ncnn::Mat box_map, float score_threshold,
                       int fea_w, int fea_h, int cols, int rows, int scale_id);
 

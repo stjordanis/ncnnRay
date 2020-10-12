@@ -105,7 +105,7 @@ set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_002_EXE ${PROJECT_NAME}_lfd)
+set(EXAMPLE_002_EXE ${PROJECT_NAME}_lffd_face)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_002_EXE} src/${EXAMPLE_002_EXE}.cpp
         src/models/LFFD.cpp src/models/LFFD.h)
@@ -120,18 +120,19 @@ set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-#set(EXAMPLE_003_EXE ${PROJECT_NAME}_face_detect_UI)
-##add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
-#add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp
-#        src/models/LFFD.cpp src/models/LFFD.h
-#        )
-#set(raylib_VERBOSE 1)
-#target_link_libraries(${EXAMPLE_003_EXE} raylib  ncnn)
-##target_link_libraries(${PROJECT_NAME} m)
-#target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
-#set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
-#        CXX_STANDARD 14
-#        CXX_STANDARD_REQUIRED YES)
+set(EXAMPLE_003_EXE ${PROJECT_NAME}_lffd_face_UI)
+#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp
+        src/models/LFFD.cpp
+        src/models/LFFD.h
+        )
+set(raylib_VERBOSE 1)
+target_link_libraries(${EXAMPLE_003_EXE} raylib  ncnn)
+#target_link_libraries(${PROJECT_NAME} m)
+target_include_directories(${EXAMPLE_003_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+set_target_properties(${EXAMPLE_003_EXE} PROPERTIES
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED YES)
 ################# EXAMPLE 006 ########################
 
 
