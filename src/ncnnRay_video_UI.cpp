@@ -6,9 +6,6 @@
 #define RAYGUI_SUPPORT_RICONS
 
 #include "../include/raygui/raygui.h"
-
-#pragma warning( pop )
-
 #include "../bin64/_deps/raylib-src/src/external/glad.h"
 #include "../include/raygui/ricons.h"
 

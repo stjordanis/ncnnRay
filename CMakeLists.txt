@@ -93,6 +93,8 @@ set(EXAMPLE_001_EXE ${PROJECT_NAME}_read_image)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
         include/ncnnRay.hpp
+        include/raygui/raygui.h
+        include/raygui/ricons.h
         )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)

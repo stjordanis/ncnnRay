@@ -42,6 +42,7 @@
 #pragma warning( disable : 4576 )
 
 #include "raylib.h"
+
 //#define NOUSER //Resolve ray error  error C2660: 'LoadImageA': function does not take 1 arguments
 //#include <intrin.h> //Resolve ray error  ppltasks.h(2712): error C3861: '_ReturnAddress': identifier not found
 #include <iostream>
