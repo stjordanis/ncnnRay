@@ -122,11 +122,16 @@ set_target_properties(${EXAMPLE_002_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
-set(EXAMPLE_003_EXE ${PROJECT_NAME}_lffd_face_UI)
+set(EXAMPLE_003_EXE ${PROJECT_NAME}_studio_UI)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_003_EXE} src/${EXAMPLE_003_EXE}.cpp
         src/models/LFFD.cpp
         src/models/LFFD.h
+        src/models/FaceDetector.h
+        src/models/FaceDetector.cpp
+        src/models/neural.h
+        src/models/neural.cpp
+
         )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_003_EXE} raylib  ncnn)
@@ -199,6 +204,7 @@ set_target_properties(${EXAMPLE_0011_EXE} PROPERTIES
         CXX_STANDARD_REQUIRED YES)
 #target_compile_options(${EXAMPLE_009_EXE} PRIVATE /wd4267 /wd4244 /wd4996)
 ################# EXAMPLE 006 ########################
+
 
 
 #add_executable(ncnn_ultraface src/ultra.cpp src/UltraFace.cpp)

@@ -44,8 +44,8 @@ void LFFD::detectFacesAndDrawOnImage(Image &image) {
         cout << "Iteration:" << i << endl;;
         auto face = face_info[i];
         Rectangle rect = {face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
-        ImageDrawRectangleLines(&image, rect, 5, RED);
-        ImageDrawCircleV(&image, Vector2{(float) face.x1, (float) face.y1}, 5, BLUE);
+        ImageDrawRectangleLines(&image, rect, 5, GREEN);
+        ImageDrawCircleV(&image, Vector2{(float) face.x1, (float) face.y1}, 5, RED);
     }
 }
 

@@ -42,6 +42,28 @@ Detector::Detector(const std::string &model_path, const ncnn::Option &opt,ncnn::
 
 }
 
+ void Detector::detectFaces(Image &img) {
+    PerfTimer timer;
+    ncnn::Mat in=rayImageToNcnn(img);
+    cout << "Total:" << in.total() << endl;
+    cout << "D:" << tensorDIMS(in) << endl;;
+
+    vector<bbox> boxes;
+    timer.tic();
+    Detect(in, boxes);
+    timer.toc("----total timer:");
+    cout << "Face detections:" << boxes.size() << endl;;
+    ImageDrawRectangle(&img, 5, 20, 20, 20, DARKPURPLE);
+
+    for (int j = 0; j < boxes.size(); ++j) {
+        cout << "Iteration:" << j << endl;;
+        auto face = boxes[j];
+        Rectangle rect = {face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
+        ImageDrawRectangleLines(&img, rect, 5, RED);
+        ImageDrawCircleV(&img, Vector2{(float) face.x1, (float) face.y1}, 5, BLUE);
+    }
+
+}
 
 void Detector::Detect(ncnn::Mat &in, std::vector<bbox>& boxes)
 {

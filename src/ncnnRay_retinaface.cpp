@@ -1,6 +1,7 @@
 #include "../include/ncnnRay.hpp"
 #include "models/FaceDetector.h"
 
+
 using namespace std;
 
 int main(int argc, char** argv)
@@ -39,27 +40,7 @@ int main(int argc, char** argv)
     float long_side = std::max(img.width, img.height);
 //    float scale = max_side/long_side;
 //    ImageResize(&img, max_side, max_side);
-    ncnn::Mat in=rayImageToNcnn(img);
-    cout << "Total:" << in.total() << endl;
-    cout << "D:" << tensorDIMS(in) << endl;;
-
-    std::vector<bbox> boxes;
-    timer.tic();
-    detector.Detect(in, boxes);
-    timer.toc("----total timer:");
-
-
-    cout << "Face detections:" << boxes.size() << endl;;
-    ImageDrawRectangle(&img, 5, 20, 20, 20, DARKPURPLE);
-
-    for (int j = 0; j < boxes.size(); ++j) {
-        cout << "Iteration:" << j << endl;;
-        auto face = boxes[j];
-        Rectangle rect = {face.x1, face.y1, face.x2 - face.x1, face.y2 - face.y1};
-        ImageDrawRectangleLines(&img, rect, 5, RED);
-        ImageDrawCircleV(&img, Vector2{(float) face.x1, (float) face.y1}, 5, BLUE);
-    }
-
+    detector.detectFaces(img);
     ExportImage(img, "ncnn-rgb-retina.png");
 
     // draw image
