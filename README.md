@@ -37,7 +37,7 @@ For more details, refer to:
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/img0.png?raw=true" width="35%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/img0.png?raw=true" width="100%"></a>  
 </h1>
 
  
