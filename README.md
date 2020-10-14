@@ -6,7 +6,7 @@
 <h1 align="center">ncnnRay++: A CMake integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/studio02.png?raw=true" width="35%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/studio02.png?raw=true" width="75%"></a>  
 </h1>
       
 <p align="center">
@@ -37,7 +37,7 @@ For more details, refer to:
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
 
 <h1 align="center">    
-  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/img0.png?raw=true" width="100%"></a>  
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/img0.png?raw=true" width="75%"></a>  
 </h1>
 
  
