@@ -67,7 +67,7 @@ Real-time face detection on a GPU (Vulkan):
    </tr>                 
    
    <tr>          
-    <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/amber.png_mosaic_cpp.pt-out.png?raw=true' width="600px"></td>
+    <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/amber.png_mosaic_cpp.pt-out.png?raw=true' width="50%"></td>
     <td>NeuralStyle</td>              
     <td> <a href="https://github.com/nihui/ncnn-android-styletransfer">Credit ncnn C++</a> </td>         
     <td> CPU / Vulkan GPU</td>         
@@ -76,7 +76,7 @@ Real-time face detection on a GPU (Vulkan):
   </tr>
   
   <tr>          
-   <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/ncnn-rgb-retina.png?raw=true' width="600px"></td>
+   <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/ncnn-rgb-retina.png?raw=true' width="50%"></td>
    <td>RetinaFace</td>              
    <td> <a href="https://github.com/nilseuropa/ros_ncnn">Credit ncnn C++</a></td>         
    <td> CPU + GPU (Vulkan) </td>         
