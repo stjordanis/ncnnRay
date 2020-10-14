@@ -7,7 +7,7 @@ static ncnn::Net styletransfernet[5];
 
 class NeuralStyle {
 public:
-    NeuralStyle(const std::string &model_path, const std::string &model_name, int num_thread_,
+    NeuralStyle(const std::string &model_path, const std::string &model_name,
                 const ncnn::Option &opt, ncnn::VulkanDevice *device);
 
     ~NeuralStyle();

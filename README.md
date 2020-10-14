@@ -47,7 +47,7 @@ Real-time face detection on a GPU (Vulkan):
 
 
 # Available AI Models (Tencent ncnn in C++)
- 
+ Most of the models were originally trained in **PyTorch**, then converted to **onnx** and then to **ncnn**. 
  <div align='left'>
  <table>
    <th>Image</th>
@@ -61,7 +61,7 @@ Real-time face detection on a GPU (Vulkan):
      <td> <a href="https://github.com/SyGoing/LFFD-with-ncnn">Credit ncnn C++</a>
      and <a href="https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices">LFFD: A Light and Fast Face Detector for Edge Devices</a> 
      </td>         
-     <td> CPU only </td>         
+     <td> CPU + GPU (Vulkan) </td>         
      <td> <a href="https://arxiv.org/abs/1904.10633">LFFD: A Light and Fast Face Detector for Edge Devices</a>              
       </td>              
    </tr>                 
@@ -74,6 +74,15 @@ Real-time face detection on a GPU (Vulkan):
     <td> <a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style</a>              
      </td>              
   </tr>
+  
+  <tr>          
+       <td><img src='https://github.com/QuantScientist/ncnnRay/blob/main/assets/ncnn-rgb-retina.png?raw=true' width="600px"></td>
+       <td>RetinaFace</td>              
+       <td> <a href="https://github.com/nilseuropa/ros_ncnn">Credit ncnn C++</a></td>         
+       <td> CPU + GPU (Vulkan) </td>         
+       <td> <a href="https://arxiv.org/abs/1904.10633">RetinaFace</a>              
+        </td>              
+     </tr>
   
   <tr>                         
       <td> More comming soon</td>                             

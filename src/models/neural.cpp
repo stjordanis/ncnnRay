@@ -2,7 +2,7 @@
 
 NeuralStyle::NeuralStyle(const std::string &model_path,
                          const std::string &model_name,
-                         int num_thread_, const ncnn::Option &opt,
+                         const ncnn::Option &opt,
                          ncnn::VulkanDevice *device) {
 
     net.opt = opt;

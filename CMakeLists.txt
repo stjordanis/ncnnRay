@@ -166,6 +166,23 @@ set_target_properties(${EXAMPLE_009_EXE} PROPERTIES
 
 ################# EXAMPLE 006 ########################
 # TARGET
+set(EXAMPLE_012_EXE ${PROJECT_NAME}_retinaface)
+#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+add_executable(${EXAMPLE_012_EXE} src/${EXAMPLE_012_EXE}.cpp
+        src/models/FaceDetector.h src/models/FaceDetector.cpp
+        )
+set(raylib_VERBOSE 1)
+target_link_libraries(${EXAMPLE_012_EXE} raylib  ncnn)
+#target_link_libraries(${PROJECT_NAME} m)
+target_include_directories(${EXAMPLE_012_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src")
+set_target_properties(${EXAMPLE_012_EXE} PROPERTIES
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED YES)
+################# EXAMPLE 006 ########################
+
+
+################# EXAMPLE 006 ########################
+# TARGET
 set(EXAMPLE_0011_EXE ${PROJECT_NAME}_neural)
 #add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
 add_executable(${EXAMPLE_0011_EXE} src/${EXAMPLE_0011_EXE}.cpp
@@ -206,6 +223,11 @@ file(COPY "resources/symbol_10_560_25L_8scales_v1_deploy.param" DESTINATION ${CM
 
 file(COPY "resources/train_10_320_20L_5scales_v2_iter_1000000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/train_10_560_25L_8scales_v1_iter_1400000.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+file(COPY "resources/retinaface.param" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/retinaface.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+
+
 
 file(COPY "resources/GameCube.ttf" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 #file(COPY "resources/EBGaramond08-Regular.otf" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
