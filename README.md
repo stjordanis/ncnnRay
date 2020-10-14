@@ -35,6 +35,11 @@ The project depends on **the Vulkan** SDK (Vulakn is Khronos' API for Graphics a
 using stb_image . The library includes conversion utils between ray Image, `ncnn::Mat` and PNG lib, all of which are interchangeable.
 For more details, refer to: 
 - https://github.com/QuantScientist/ncnnRay/blob/master/include/utils/vision_utils.hpp     
+
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/img0.png?raw=true" width="35%"></a>  
+</h1>
+
  
 **Why??++** The goal is to integrate both libraries into HTML using Webassembly. ray is already natively supported on WASM. 
 This would open the door to countless opportunities in creativity.  
