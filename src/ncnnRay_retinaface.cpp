@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 
     ncnn::Option opt = optGPU(use_vulkan_compute, gpu_device);
     std::string model_path = ".";
-    std::string fileName = "faces.png";
+    std::string fileName = "faces01.png";
 
 //    const int max_side = 320;
 

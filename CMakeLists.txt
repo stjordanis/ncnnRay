@@ -211,6 +211,7 @@ file(COPY "resources/cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/big-cat.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/baboon.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/faces.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/faces01.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/windmill.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/manga.png" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 
