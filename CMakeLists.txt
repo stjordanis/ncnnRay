@@ -157,6 +157,8 @@ add_executable(${EXAMPLE_009_EXE} src/${EXAMPLE_009_EXE}.cpp
         src/models/LFFD.h
         src/models/neural.cpp
         src/models/neural.h
+        src/models/FaceDetector.h
+        src/models/FaceDetector.cpp
         )
 set(raylib_VERBOSE 1)
 target_link_libraries(${EXAMPLE_009_EXE} raylib  ncnn)

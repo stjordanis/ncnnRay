@@ -14,6 +14,7 @@
 #include "../include/pl_mpeg/pl_mpeg.h"
 #include "models/neural.h"
 #include "models/LFFD.h"
+#include "models/FaceDetector.h"
 
 Font gamefont;
 
@@ -57,6 +58,8 @@ int main() {
     NeuralStyle nstyle2(model_path, model_name2, opt, g_vkdev);
 
     LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
+
+    Detector detector (model_path, opt,g_vkdev, false);
 
     const int screenWidth = 1300;
     const int screenHeight = 800;
@@ -214,7 +217,7 @@ int main() {
         comboBoxActive = GuiComboBox(
                 Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 9 * padding, buttonWidth + 35,
                           buttonHeight},
-                "LFFD;CANDY;MOSAIC", comboBoxActive);
+                "RETINA;LFFD;CANDY;MOSAIC", comboBoxActive);
         animate = (GuiCheckBox(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 8 * padding, 20, 20},
                                "Animate", animate));
 
@@ -223,8 +226,19 @@ int main() {
 
         if (animate && vs.videoLoaded) {
             TraceLog(LOG_DEBUG, "TorchRaLib: Animate");
-
+            ImageResize(&vs.imageFrame, vs.imageFrame.width/2, vs.imageFrame.height/2);
             if (comboBoxActive + 1 == 1) {
+//                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
+                detector.detectFaces(vs.imageFrame);
+//                TraceLog(LOG_INFO, "ncnnRay: RetinaFace");
+                vs.tx = LoadTextureFromImage(vs.imageFrame);
+                DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
+                                             screenHeight / 2 - (float) vs.tx.height * imageScale / 2}, 0.0f,
+                              imageScale, WHITE);
+//                UnloadTexture(vs.tx);
+            }
+
+            if (comboBoxActive + 1 == 2) {
 //                VU.applyModelOnImage(device, moduleMosaic, vs.imageFrame);
                 lffd1.detectFacesAndDrawOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
@@ -234,7 +248,7 @@ int main() {
 //                UnloadTexture(vs.tx);
             }
 
-            if (comboBoxActive + 1 == 2) {
+            if (comboBoxActive + 1 == 3) {
                 vs.imageFrame = nstyle.applyStyleOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,
@@ -242,7 +256,7 @@ int main() {
                               imageScale, WHITE);
             }
 
-            if (comboBoxActive + 1 == 3) {
+            if (comboBoxActive + 1 == 4) {
                 vs.imageFrame = nstyle2.applyStyleOnImage(vs.imageFrame);
                 vs.tx = LoadTextureFromImage(vs.imageFrame);
                 DrawTextureEx(vs.tx, Vector2{screenWidth / 2 - (float) vs.tx.width * imageScale / 2,

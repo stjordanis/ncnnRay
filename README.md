@@ -224,6 +224,11 @@ year={2019}
 
 # Building using CMake
 
+Start by:
+```bash
+git clone --recurssive https://github.com/QuantScientist/ncnnRay.git
+```
+
 ## ncnn 
 **CMake** should take care of everything for you!   
 ````bash
