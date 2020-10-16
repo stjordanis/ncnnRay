@@ -30,7 +30,6 @@ int main(int argc, char **argv) {
     ExportImage(saveImageimageRGBA, "manga-ncnn-rgba.png");
 
     //RGBA
-    ncnn::destroy_gpu_instance();
     return 0;
 }
 
