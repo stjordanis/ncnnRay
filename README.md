@@ -266,6 +266,27 @@ git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" . -B bin64 -DCMAKE_INSTALL_PREFIX=bin64 -DNCNN_VULKAN=OFF -DNCNN_SYSTEM_GLSLANG=OFF -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON -DNCNN_BUILD_TOOLS=ON  && cmake --build bin64
 ````
 
+````bash
+[ 91%] Building CXX object CMakeFiles/ncnnRay_studio_UI.dir/src/models/LFFD.cpp.o
+In file included from /src/ncnnRay/ncnnRay/src/models/LFFD.cpp:1:0:
+/src/ncnnRay/ncnnRay/src/models/LFFD.h:6:1: warning: 'typedef' was ignored in this declaration
+ typedef struct FaceInfo {
+ ^~~~~~~
+[ 91%] Building CXX object CMakeFiles/ncnnRay_studio_UI.dir/src/models/FaceDetector.cpp.o
+[ 91%] Building CXX object CMakeFiles/ncnnRay_studio_UI.dir/src/models/neural.cpp.o
+[ 92%] Linking CXX executable ncnnRay_studio_UI
+[ 92%] Built target ncnnRay_studio_UI
+Scanning dependencies of target ncnnRay_retinaface
+[ 92%] Building CXX object CMakeFiles/ncnnRay_retinaface.dir/src/ncnnRay_retinaface.cpp.o
+[ 93%] Building CXX object CMakeFiles/ncnnRay_retinaface.dir/src/models/FaceDetector.cpp.o
+[ 93%] Linking CXX executable ncnnRay_retinaface
+[ 93%] Built target ncnnRay_retinaface
+Scanning dependencies of target ncnnRay_lffd_face
+[ 94%] Building CXX object CMakeFiles/ncnnRay_lffd_face.dir/src/ncnnRay_lffd_face.cpp.o
+In file included from /src/ncnnRay/ncnnRay/src/ncnnRay_lffd_face.cpp:2:0:
+/src/ncnnRay/ncnnRay/src/models/LFFD.h:6:1: warning: 'typedef' was ignored in this declaration
+ typedef struct FaceInfo {
+````
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/linux.png?raw=true" width="85%"></a>  
 </h1>
