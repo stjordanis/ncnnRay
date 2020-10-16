@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     std::string model_name = "candy";
     std::string fileName = "manga.png";
 
-    NeuralStyle nstyle(model_path, model_name, opt, g_vkdev);
+    NeuralStyle nstyle(model_path, model_name, opt);
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
 
 //    ImageResize(&image, image.width / 2, image.height / 2);

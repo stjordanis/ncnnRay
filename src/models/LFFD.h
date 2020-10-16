@@ -16,8 +16,7 @@ typedef struct FaceInfo {
 
 class LFFD {
 public:
-    LFFD(const std::string &model_path, int scale_num, int num_thread_, const ncnn::Option &opt,
-         ncnn::VulkanDevice *device);
+    LFFD(const std::string &model_path, int scale_num, int num_thread_, const ncnn::Option &opt);
 
     ~LFFD();
 
@@ -39,7 +38,7 @@ private:
              float threshold, int type = NMS_MIN);
 
 private:
-    ncnn::Net lffd;
+    ncnn::Net net;
     int num_thread;
     int num_output_scales;
     int image_w;

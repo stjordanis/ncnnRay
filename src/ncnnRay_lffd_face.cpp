@@ -27,7 +27,7 @@ int main() {
     std::string fileName = "manga.png";
 
 
-    LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
+    LFFD lffd1(model_path, 8, 0, opt);
     Image image = LoadImage(fileName.c_str());   // Loaded in CPU memory (RAM)
 //    ImageResize(&image, image.width / 2, image.height / 2);
     lffd1.detectFacesAndDrawOnImage(image);

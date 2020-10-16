@@ -50,9 +50,8 @@ void LFFD::detectFacesAndDrawOnImage(Image &image) {
 }
 
 LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
-           const ncnn::Option &opt,
-           ncnn::VulkanDevice *device) {
-    lffd.opt = opt;
+           const ncnn::Option &opt) {
+    net.opt = opt;
 
     num_output_scales = scale_num;
     num_thread = num_thread_;
@@ -100,19 +99,19 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
 
 
 #if NCNN_VULKAN
-    if (lffd.opt.use_vulkan_compute) {
-        lffd.set_vulkan_device(device);
+    if (net.opt.use_vulkan_compute) {
+        TraceLog(LOG_INFO, "ncnnRay: Opt using vulkan::%i", net.opt.use_vulkan_compute);
+        net.set_vulkan_device(g_vkdev);
     }
 #endif // NCNN_VULKAN
 
-
-    lffd.load_param(param_file_name.data());
-    lffd.load_model(bin_file_name.data());
-    TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", lffd.opt.use_vulkan_compute);
+    net.load_param(param_file_name.data());
+    net.load_model(bin_file_name.data());
+    TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", net.opt.use_vulkan_compute);
 }
 
 LFFD::~LFFD() {
-    lffd.clear();
+    net.clear();
 }
 
 int LFFD::detect(ncnn::Mat &img, std::vector<FaceInfo> &face_list, int resize_h, int resize_w,
@@ -135,7 +134,7 @@ int LFFD::detect(ncnn::Mat &img, std::vector<FaceInfo> &face_list, int resize_h,
     ncnn_img.substract_mean_normalize(mean_vals, norm_vals);
 
     std::vector<FaceInfo> bbox_collection;
-    ncnn::Extractor ex = lffd.create_extractor();
+    ncnn::Extractor ex = net.create_extractor();
 
 //    ex.set_vulkan_compute(true);
     ex.set_num_threads(num_thread);

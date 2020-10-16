@@ -54,12 +54,12 @@ int main() {
     std::string model_name = "candy";
     std::string model_name2 = "mosaic";
 
-    NeuralStyle nstyle(model_path, model_name,  opt, g_vkdev);
-    NeuralStyle nstyle2(model_path, model_name2, opt, g_vkdev);
+    NeuralStyle nstyle(model_path, model_name,  opt, );
+    NeuralStyle nstyle2(model_path, model_name2, opt);
 
-    LFFD lffd1(model_path, 8, 0, opt, g_vkdev);
+    LFFD lffd1(model_path, 8, 0, opt);
 
-    Detector detector (model_path, opt,g_vkdev, false);
+    Detector detector (model_path, opt, false);
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1600;

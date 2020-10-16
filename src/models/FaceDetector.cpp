@@ -20,18 +20,21 @@ inline void Detector::Release(){
     }
 }
 
-Detector::Detector(const std::string &model_path, const ncnn::Option &opt,ncnn::VulkanDevice *device, bool retinaface):
+Detector::Detector(const std::string &model_path, const ncnn::Option &opt, bool retinaface):
         _nms(0.4),
         _threshold(0.6),
         _mean_val{104.f, 117.f, 123.f},
         _retinaface(retinaface),
         Net(new ncnn::Net())
 {
+
     #if NCNN_VULKAN
     if (Net->opt.use_vulkan_compute) {
-        Net->set_vulkan_device(device);
+        TraceLog(LOG_INFO, "ncnnRay: Opt using vulkan::%i", Net.opt.use_vulkan_compute);
+        Net->set_vulkan_device(g_vkdev);
     }
     #endif // NCNN_VULKAN
+
 
     std::string param = model_path + "/retinaface.param";
     std::string bin = model_path + "/retinaface.bin";

@@ -3,13 +3,17 @@
 NeuralStyle::NeuralStyle(const std::string &model_path,
                          const std::string &model_name,
                          const ncnn::Option &opt,
-                         ncnn::VulkanDevice *device) {
+                         ) {
 
     net.opt = opt;
+
+    #if NCNN_VULKAN
     if (net.opt.use_vulkan_compute) {
         TraceLog(LOG_INFO, "ncnnRay: Opt using vulkan::%i", net.opt.use_vulkan_compute);
-        net.set_vulkan_device(device);
+        net.set_vulkan_device(g_vkdev);
     }
+    #endif // NCNN_VULKAN
+
 //    std::string param = model_path + "/" + model_name +".param";
     std::string bin = model_path + "/" + model_name + ".bin";
     net.load_param(styletransfer_param_bin);

@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 //    const int max_side = 320;
 
     // slim or RFB
-    Detector detector (model_path, opt,g_vkdev, false);
+    Detector detector (model_path, opt, false);
     PerfTimer timer;
 
 //    // scale

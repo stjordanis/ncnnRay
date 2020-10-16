@@ -38,7 +38,7 @@ public:
 
     void detectFaces(Image &img);
 
-    Detector(const std::string &model_path, const ncnn::Option &opt,ncnn::VulkanDevice *device, bool retinaface = false);
+    Detector(const std::string &model_path, const ncnn::Option &opt,bool retinaface = false);
 
     inline void Release();
 
