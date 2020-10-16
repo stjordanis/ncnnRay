@@ -251,6 +251,19 @@ cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" .
 ````
 ## Downloading and installing steps rayLib:
 The **CMake file will download this automatically for you**.
+
+## Compiling on Windows
+
+````bash
+win10-build.bat 
+````
+## Compiling on Linux
+
+Please use the provided **docker** that includes everything you need including Emiscripten. 
+````bash
+cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" . -B bin64 -DCMAKE_INSTALL_PREFIX=bin64 -DNCNN_VULKAN=OFF -DNCNN_SYSTEM_GLSLANG=OFF -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON -DNCNN_BUILD_TOOLS=ON  && cmake --build bin64
+````
+
  
 ## Contributing
 

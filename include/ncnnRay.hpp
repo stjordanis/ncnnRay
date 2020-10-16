@@ -169,7 +169,7 @@ static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1)
 //    opt.use_image_storage = false;
 
     opt.use_vulkan_compute = use_vulkan_compute;
-//    #if NCNN_VULKAN
+    #if NCNN_VULKAN
     if (use_vulkan_compute && gpu_device > -1) {
         TraceLog(LOG_INFO, "ncnnRay: use_vulkan_compute:%i", use_vulkan_compute);
 //        ncnn::create_gpu_instance();
@@ -179,7 +179,7 @@ static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1)
         opt.workspace_vkallocator = g_blob_vkallocator;
         opt.staging_vkallocator = g_staging_vkallocator;
     }
-//    #endif // NCNN_VULKAN
+    #endif // NCNN_VULKAN
 
     return opt;
 }
@@ -187,7 +187,10 @@ static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1)
 
 static int isGPU() {
     // initialize when app starts
-    int ins = ncnn::get_gpu_count();
+    int ins=0;
+    #if NCNN_VULKAN
+    ins = ncnn::get_gpu_count();
+    #endif // NCNN_VULKAN
     std::cout << "GPU instance=?:" << ins << std::endl;;
 //    auto g= ncnn::get_gpu_device(0);
 //    std::cout<<"GPU Device=?:" << g <<std::endl;;
