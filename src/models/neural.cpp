@@ -2,7 +2,7 @@
 
 NeuralStyle::NeuralStyle(const std::string &model_path,
                          const std::string &model_name,
-                         const ncnn::Option &opt,
+                         const ncnn::Option &opt
                          ) {
 
     net.opt = opt;

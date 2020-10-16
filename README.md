@@ -265,6 +265,11 @@ Please use the provided **docker** that includes everything you need including E
 git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" . -B bin64 -DCMAKE_INSTALL_PREFIX=bin64 -DNCNN_VULKAN=OFF -DNCNN_SYSTEM_GLSLANG=OFF -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON -DNCNN_BUILD_TOOLS=ON  && cmake --build bin64
 ````
+
+<h1 align="center">    
+  <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/linux.png?raw=true" width="85%"></a>  
+</h1>
+
 ## Contributing
 
 Feel free to report issues during build or execution. We also welcome suggestions to improve the performance of this application.

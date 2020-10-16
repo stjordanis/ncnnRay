@@ -54,7 +54,7 @@ int main() {
     std::string model_name = "candy";
     std::string model_name2 = "mosaic";
 
-    NeuralStyle nstyle(model_path, model_name,  opt, );
+    NeuralStyle nstyle(model_path, model_name,  opt);
     NeuralStyle nstyle2(model_path, model_name2, opt);
 
     LFFD lffd1(model_path, 8, 0, opt);

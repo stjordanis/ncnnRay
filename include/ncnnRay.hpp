@@ -75,6 +75,8 @@
 #include "gpu.h"
 #include "benchmark.h"
 
+#include <cstring> //to import the std::memcpy function.
+
 //#if NCNN_VULKAN
 //#include "gpu.h"
 //#endif
