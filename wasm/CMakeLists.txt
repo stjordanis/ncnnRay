@@ -9,6 +9,9 @@ if (EMSCRIPTEN)
     set(CMAKE_SYSTEM_NAME Emscripten)
     set(CMAKE_SYSTEM_VERSION 1)
     set(CMAKE_CROSSCOMPILING TRUE)
+    if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+        set(CMAKE_C_COMPILER "emcc")
+    endif ()
 else()
 
 endif()
@@ -22,19 +25,14 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif ()
 
 
+#file(GLOB sourceFiles hello_world.c)
+add_executable(hello_world hello_world.c)
 
-#find_path(EMSCRIPTEN_INCLUDE_DIR emscripten/emscripten.h
-#	PATHS /include
-#	NO_DEFAULT_PATH
-#	ONLY_CMAKE_FIND_ROOT_PATH
-#	)
-#
-#if(NOT EMSCRIPTEN_INCLUDE_DIR)
-#	message(FATAL_ERROR "emscripten.h could not be found! Is CMAKE_FIND_ROOT_PATH='${CMAKE_FIND_ROOT_PATH}' correct?")
-#endif()
-
-file(GLOB sourceFiles hello_world.c)
-add_executable(hello_world ${sourceFiles})
+#ADD_CUSTOM_TARGET(
+#        emcc_env
+#        COMMAND cmd C:/emsdk/emsdk_env.bat
+#)
+#ADD_DEPENDENCIES(hello_world emcc_env)
 
 #add_executable(hello_world main.cpp)
 #target_include_directories(hello_world PRIVATE ..)
