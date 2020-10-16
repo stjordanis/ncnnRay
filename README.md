@@ -233,6 +233,7 @@ git clone --recurssive https://github.com/QuantScientist/ncnnRay.git
 **CMake** should take care of everything for you!   
 ````bash
 cd to 3rdparty\ncnn\
+git submodule update --init
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" . 
 -B bin64 -DNCNN_VULKAN=ON -DNCNN_SYSTEM_GLSLANG=ON -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON 
@@ -261,10 +262,9 @@ win10-build.bat
 
 Please use the provided **docker** that includes everything you need including Emiscripten. 
 ````bash
+git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" . -B bin64 -DCMAKE_INSTALL_PREFIX=bin64 -DNCNN_VULKAN=OFF -DNCNN_SYSTEM_GLSLANG=OFF -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON -DNCNN_BUILD_TOOLS=ON  && cmake --build bin64
 ````
-
- 
 ## Contributing
 
 Feel free to report issues during build or execution. We also welcome suggestions to improve the performance of this application.
