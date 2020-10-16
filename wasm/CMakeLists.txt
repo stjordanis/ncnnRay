@@ -9,9 +9,15 @@ if (EMSCRIPTEN)
     set(CMAKE_SYSTEM_NAME Emscripten)
     set(CMAKE_SYSTEM_VERSION 1)
     set(CMAKE_CROSSCOMPILING TRUE)
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-        set(CMAKE_C_COMPILER "emcc")
-    endif ()
+#    SET(CMAKE_C_COMPILER   emcc)
+#    SET(CMAKE_CXX_COMPILER em++)
+#    
+    #ADD_CUSTOM_TARGET(
+    #        emcc_env
+    #        COMMAND cmd C:/emsdk/emsdk_env.bat
+    #)
+    #ADD_DEPENDENCIES(hello_world emcc_env)
+    #set(CMAKE_C_COMPILER "emcc")
 else()
 
 endif()
@@ -26,18 +32,21 @@ endif ()
 
 
 #file(GLOB sourceFiles hello_world.c)
-add_executable(hello_world hello_world.c)
-
-#ADD_CUSTOM_TARGET(
-#        emcc_env
-#        COMMAND cmd C:/emsdk/emsdk_env.bat
-#)
-#ADD_DEPENDENCIES(hello_world emcc_env)
-
 #add_executable(hello_world main.cpp)
 #target_include_directories(hello_world PRIVATE ..)
 #target_link_libraries(hello_world PRIVATE imtui-ncurses imtui-examples-common)
-target_include_directories(hello_world
+
+
+if (EMSCRIPTEN)
+   add_executable(hello_world.html ncnnRay_wasm_test.c)	
+   target_include_directories(hello_world.html
+			PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
+			"c:/emsdk/upstream/emscripten/system/include/"
+			)
+else()
+    add_executable(hello_world ncnnRay_wasm_test.c)
+	target_include_directories(hello_world
         PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
         "c:/emsdk/upstream/emscripten/system/include/"
         )
+endif()
