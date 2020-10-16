@@ -93,5 +93,4 @@ EXPOSE 6006 3838 8787 8888 8786 9786 8788 5432 8000 7800 9999 7842 22 3122
 WORKDIR /src
 
 RUN apt-get update \
- && apt-get install -y nano htop libx11-dev libgl1-mesa-dev libglu1-mesa-dev libjack0 libjack-dev libasound2-dev libgtk2.0-dev xorg-dev
-
+ && apt-get install -y nano htop libx11-dev libgl1-mesa-dev libglu1-mesa-dev libjack0 libjack-dev libasound2-dev libgtk2.0-dev xorg-dev curl  libcurl4-openssl-dev
