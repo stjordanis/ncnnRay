@@ -38,8 +38,8 @@ endif ()
 
 
 if (EMSCRIPTEN)
-   add_executable(hello_world.html ncnnRay_wasm_test.c)	
-   target_include_directories(hello_world.html
+   add_executable(hello_world ncnnRay_wasm_test.c)
+   target_include_directories(hello_world
 			PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
 			"c:/emsdk/upstream/emscripten/system/include/"
 			)
