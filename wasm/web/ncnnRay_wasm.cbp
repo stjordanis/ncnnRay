@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ncnnRay_wasm"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\emsdk\;CMake Files\emsdk\upstream\;CMake Files\emsdk\upstream\emscripten\;CMake Files\emsdk\upstream\emscripten\cmake\;CMake Files\emsdk\upstream\emscripten\cmake\Modules\;CMake Files\emsdk\upstream\emscripten\cmake\Modules\Platform\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hello_world.html">
+				<Option output="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web/hello_world.html.js" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="c:/emsdk/upstream/emscripten/system/include/emscripten"/>
+					<Add directory="c:/emsdk/upstream/emscripten/system/include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\libcxx"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libcxxabi\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\compat"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\libc"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libc\musl\arch\emscripten"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\local\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\SSE"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\neon"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\compiler-rt\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libunwind\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\SDL"/>
+					<Add directory="C:\emsdk\upstream\lib\clang\12.0.0\include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 hello_world.html"/>
+					<CompileFile command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hello_world.html/fast">
+				<Option output="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web/hello_world.html.js" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="c:/emsdk/upstream/emscripten/system/include/emscripten"/>
+					<Add directory="c:/emsdk/upstream/emscripten/system/include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\libcxx"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libcxxabi\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\compat"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\libc"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libc\musl\arch\emscripten"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\local\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\SSE"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\neon"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\compiler-rt\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\lib\libunwind\include"/>
+					<Add directory="C:\emsdk\upstream\emscripten\system\include\SDL"/>
+					<Add directory="C:\emsdk\upstream\lib\clang\12.0.0\include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 hello_world.html/fast"/>
+					<CompileFile command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f F:\Dropbox\Tech\production\ppc\edge\ncnnRay\wasm\web\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/ncnnRay_wasm_test.c">
+			<Option target="hello_world.html"/>
+		</Unit>
+		<Unit filename="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/emsdk/upstream/emscripten/cmake/Modules/CMakeSystemSpecificInformation.cmake">
+			<Option virtualFolder="CMake Files\emsdk\upstream\emscripten\cmake\Modules\"/>
+		</Unit>
+		<Unit filename="F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake">
+			<Option virtualFolder="CMake Files\emsdk\upstream\emscripten\cmake\Modules\Platform\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

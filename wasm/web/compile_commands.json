@@ -1,0 +1,7 @@
+[
+{
+  "directory": "F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/web",
+  "command": "C:\\emsdk\\upstream\\emscripten\\emcc.bat  @CMakeFiles/hello_world.html.dir/includes_C.rsp -DNDEBUG -O2 -o CMakeFiles\\hello_world.html.dir\\ncnnRay_wasm_test.c.o -c F:\\Dropbox\\Tech\\production\\ppc\\edge\\ncnnRay\\wasm\\ncnnRay_wasm_test.c",
+  "file": "F:/Dropbox/Tech/production/ppc/edge/ncnnRay/wasm/ncnnRay_wasm_test.c"
+}
+]
