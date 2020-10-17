@@ -90,7 +90,29 @@ RUN ln -s /usr/local/share/cmake-3.17/ /usr/bin/cmake
 
 EXPOSE 6006 3838 8787 8888 8786 9786 8788 5432 8000 7800 9999 7842 22 3122
 
+RUN add compile_web_linux.sh
+
 WORKDIR /src
 
 RUN apt-get update \
- && apt-get install -y nano htop libx11-dev libgl1-mesa-dev libglu1-mesa-dev libjack0 libjack-dev libasound2-dev libgtk2.0-dev xorg-dev curl  libcurl4-openssl-dev
+ && apt-get install -y nano htop libx11-dev libgl1-mesa-dev libglu1-mesa-dev libjack0 libjack-dev libasound2-dev libgtk2.0-dev xorg-dev curl  libcurl4-openssl-dev \
+ apt-utils gcc g++ openssh-server cmake build-essential gdb gdbserver rsync vim \
+
+ 
+RUN mkdir /var/run/sshd
+RUN echo 'root:root' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+# 22 for ssh server. 7777 for gdb server.
+EXPOSE 22 7777 7842 8000
+
+RUN useradd -ms /bin/bash cpp
+RUN echo 'cpp:ray' | chpasswd
+
+CMD ["/usr/sbin/sshd", "-D"] 

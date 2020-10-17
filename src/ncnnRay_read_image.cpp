@@ -11,8 +11,11 @@
 #include "models/neural.h"
 #include "models/LFFD.h"
 
-int main(int argc, char **argv) {
+#if EMSCRIPTEN
+#include <emscripten.h>
+#endif
 
+int main(int argc, char **argv) {
 
     //RGB
     Image image = LoadImage("faces.png");   // Loaded in CPU memory (RAM)
