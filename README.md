@@ -3,7 +3,7 @@
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="35%"></a>  
 </h1>
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
+<h1 align="center">ncnnRay++: A CMake / WASM integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
 
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/studio02.png?raw=true" width="80%"></a>  
