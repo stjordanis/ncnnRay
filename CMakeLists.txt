@@ -122,6 +122,13 @@ if (EMSCRIPTEN)
             include/ncnnRay.hpp
             include/raygui/raygui.h
             include/raygui/ricons.h
+            include/ncnnRay.hpp
+            src/models/neural.cpp
+            src/models/neural.h
+            src/models/LFFD.cpp
+            src/models/LFFD.h
+            src/models/FaceDetector.h
+            src/models/FaceDetector.cpp
             )
     target_link_libraries(${EXAMPLE_001_WASM} raylib  ncnn)
     target_include_directories(
@@ -138,6 +145,13 @@ else()
             include/ncnnRay.hpp
             include/raygui/raygui.h
             include/raygui/ricons.h
+            include/ncnnRay.hpp
+            src/models/neural.cpp
+            src/models/neural.h
+            src/models/LFFD.cpp
+            src/models/LFFD.h
+            src/models/FaceDetector.h
+            src/models/FaceDetector.cpp
             )
     set(raylib_VERBOSE 1)
     target_link_libraries(${EXAMPLE_001_WASM} raylib  ncnn)
@@ -149,59 +163,58 @@ else()
     set_target_properties(${EXAMPLE_001_WASM} PROPERTIES
             CXX_STANDARD 14
             CXX_STANDARD_REQUIRED YES)
-endif()
+endif ()
 
 ################## EXAMPLE 006 ########################
 
 
-
-################## EXAMPLE 006 ########################
-## TARGET
-set(EXAMPLE_001_EXE ${PROJECT_NAME}_read_image)
-#add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
-
-if (EMSCRIPTEN)
-    set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
-    set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-
-    set(FLAGS "-o ${EXAMPLE_001_EXE}.html -s -O3")
-    set(CMAKE_EXECUTABLE_SUFFIX ".html")
-    set (CMAKE_CXX_FLAGS "-s ALLOW_MEMORY_GROWTH=1 -s FETCH=1 -s ASSERTIONS=1 -s DISABLE_EXCEPTION_CATCHING=0")
-
-    add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
-            include/ncnnRay.hpp
-            include/raygui/raygui.h
-            include/raygui/ricons.h
-            )
-    target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
-    target_include_directories(
-            ${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src"
-            PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
-            "c:/emsdk/upstream/emscripten/system/include/"
-            )
-
-    #    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/index-tmpl.html ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TARGET}/index.html @ONLY)
-    #    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/style.css ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TARGET}/style.css @ONLY)
-
-else()
-    add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
-            include/ncnnRay.hpp
-            include/raygui/raygui.h
-            include/raygui/ricons.h
-            )
-    set(raylib_VERBOSE 1)
-    target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
-    target_include_directories(
-            ${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src"
-            PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
-            "c:/emsdk/upstream/emscripten/system/include/"
-    )
-    set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
-            CXX_STANDARD 14
-            CXX_STANDARD_REQUIRED YES)
-endif()
+################### EXAMPLE 006 ########################
+### TARGET
+#set(EXAMPLE_001_EXE ${PROJECT_NAME}_read_image)
+##add_executable(${EXAMPLE_005_EXE} src/${EXAMPLE_005_EXE}.cpp)
+#
+#if (EMSCRIPTEN)
+#    set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+#    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+#    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)
+#    set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+#
+#    set(FLAGS "-o ${EXAMPLE_001_EXE}.html -s -O3")
+#    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+#    set (CMAKE_CXX_FLAGS "-s ALLOW_MEMORY_GROWTH=1 -s FETCH=1 -s ASSERTIONS=1 -s DISABLE_EXCEPTION_CATCHING=0")
+#
+#    add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
+#            include/ncnnRay.hpp
+#            include/raygui/raygui.h
+#            include/raygui/ricons.h
+#            )
+#    target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
+#    target_include_directories(
+#            ${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src"
+#            PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
+#            "c:/emsdk/upstream/emscripten/system/include/"
+#            )
+#
+#    #    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/index-tmpl.html ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TARGET}/index.html @ONLY)
+#    #    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/style.css ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TARGET}/style.css @ONLY)
+#
+#else()
+#    add_executable(${EXAMPLE_001_EXE} src/${EXAMPLE_001_EXE}.cpp
+#            include/ncnnRay.hpp
+#            include/raygui/raygui.h
+#            include/raygui/ricons.h
+#            )
+#    set(raylib_VERBOSE 1)
+#    target_link_libraries(${EXAMPLE_001_EXE} raylib  ncnn)
+#    target_include_directories(
+#            ${EXAMPLE_001_EXE} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ncnn/src"
+#            PUBLIC "c:/emsdk/upstream/emscripten/system/include/emscripten/"
+#            "c:/emsdk/upstream/emscripten/system/include/"
+#    )
+#    set_target_properties(${EXAMPLE_001_EXE} PROPERTIES
+#            CXX_STANDARD 14
+#            CXX_STANDARD_REQUIRED YES)
+#endif()
 
 ################# EXAMPLE 006 ########################
 
@@ -350,6 +363,7 @@ file(COPY "resources/click.ogg" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 #file(COPY "resources/torch.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/torch2.rgs" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 file(COPY "resources/mosaic.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
+file(COPY "resources/candy.bin" DESTINATION ${CMAKE_SOURCE_DIR}/bin64)
 
 
 

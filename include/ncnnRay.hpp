@@ -98,6 +98,7 @@ static ncnn::VkAllocator *g_blob_vkallocator = 0;
 static ncnn::VkAllocator *g_staging_vkallocator = 0;
 #endif // NCNN_VULKAN
 
+
 using namespace std;
 
 //class VisionUtils {
@@ -228,7 +229,7 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGB, width, height);
     ncnn::Mat tensor = ncnn::Mat::from_pixels((const unsigned char *) image.data, type, width, height);
 
-    TraceLog(LOG_INFO, "ncnnRay: final T dims:%i", tensor.shape().dims);
+    TraceLog(LOG_INFO, "ncnnRay: rayImageToNcnn final T dims:%i", tensor.shape().dims);
 //    delete[] pointer;
     return tensor;
 }
@@ -239,6 +240,7 @@ static Image ncnnToRayImage(ncnn::Mat &tensor) {
     unsigned char *torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(
             3 * height * width * sizeof(unsigned char)));
     tensor.to_pixels(torchPointer, ncnn::Mat::PIXEL_RGB);
+    TraceLog(LOG_INFO, "ncnnRay: ncnnToRayImage final T dims:%i", tensor.shape().dims);
 //    return Image{0};
     return Image{
             torchPointer,

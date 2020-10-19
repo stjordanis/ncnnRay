@@ -20,6 +20,8 @@ public:
 
     ~LFFD();
 
+    LFFD();
+
     void detectFacesAndExportImage(const string &fileName);
 
     void detectFacesAndDrawOnImage(Image &image);

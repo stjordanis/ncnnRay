@@ -30,7 +30,7 @@ Detector::Detector(const std::string &model_path, const ncnn::Option &opt, bool 
 
     #if NCNN_VULKAN
     if (Net->opt.use_vulkan_compute) {
-        TraceLog(LOG_INFO, "ncnnRay: Opt using vulkan::%i", Net->opt.use_vulkan_compute);
+        TraceLog(LOG_INFO, "ncnnRay: Detector Opt using vulkan::%i", Net->opt.use_vulkan_compute);
         Net->set_vulkan_device(g_vkdev);
     }
     #endif // NCNN_VULKAN
