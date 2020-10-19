@@ -12,6 +12,8 @@ public:
 
     ~NeuralStyle();
 
+    NeuralStyle();
+
     Image applyStyleOnImage(Image &image);
 
     ncnn::Mat transform(ncnn::Mat &in);

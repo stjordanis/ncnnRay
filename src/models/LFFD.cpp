@@ -104,7 +104,7 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
         net.set_vulkan_device(g_vkdev);
     }
 #endif // NCNN_VULKAN
-
+    TraceLog(LOG_INFO, "ncnnRay:  loading model, GPU enabled?=%i", net.opt.use_vulkan_compute);
     net.load_param(param_file_name.data());
     net.load_model(bin_file_name.data());
     TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", net.opt.use_vulkan_compute);
@@ -113,6 +113,8 @@ LFFD::LFFD(const std::string &model_path, int scale_num, int num_thread_,
 LFFD::~LFFD() {
     net.clear();
 }
+
+LFFD::LFFD() {};
 
 int LFFD::detect(ncnn::Mat &img, std::vector<FaceInfo> &face_list, int resize_h, int resize_w,
                  float score_threshold, float nms_threshold, int top_k, std::vector<int> skip_scale_branch_list) {
