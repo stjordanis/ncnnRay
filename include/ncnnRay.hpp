@@ -158,6 +158,11 @@ static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1)
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
     opt.use_vulkan_compute = use_vulkan_compute;
+    opt.use_fp16_packed = true;
+    opt.use_fp16_storage = true;
+    opt.use_fp16_arithmetic = false;
+    opt.use_int8_storage = true;
+    opt.use_int8_arithmetic = false;
 
 //    opt.use_winograd_convolution = true;
 //    opt.use_sgemm_convolution = true;

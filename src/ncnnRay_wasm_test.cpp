@@ -6,7 +6,7 @@
 #define RAYGUI_SUPPORT_RICONS
 
 #include "../include/raygui/raygui.h"
-#include "../bin64/_deps/raylib-src/src/external/glad.h"
+//#include "../bin64/_deps/raylib-src/src/external/glad.h"
 #include "../include/raygui/ricons.h"
 
 #define PL_MPEG_IMPLEMENTATION
@@ -18,6 +18,7 @@
 
 #if EMSCRIPTEN
 #include <emscripten.h>
+//#include "../web/_deps/raylib-src/src/external/glad.h"
 #endif
 
 #include "models/FaceDetector.h"
@@ -38,6 +39,10 @@ void handleImageScaling(const int screenWidth, const int screenHeight, const Ima
 
 void handleDroppedFiles(const int screenWidth, const int screenHeight, Image &image,
                         Texture2D &texture, bool &imageLoaded, float &imageScale);
+
+void handleExport(char *fileName, const Image &image, bool imageLoaded, bool btnExport, bool &windowBoxActive,
+                  Texture2D &texture);
+
 
 //----------------------------------------------------------------------------------
 // Main Enry Point
@@ -71,6 +76,16 @@ NeuralStyle *nstyle1 = nullptr;
 NeuralStyle *nstyle2 = nullptr;
 LFFD *lffd = nullptr;
 
+bool windowBoxActive = false;
+bool btnExport = false;
+char fileName[64] = "img0";
+Rectangle windowBoxRec = {};
+int fileFormatActive = 0;
+const char *fileFormatTextList[1] = {".png"};
+int pixelFormatActive = 0;
+const char *pixelFormatTextList[1] = {"RGB"};
+bool textBoxEditMode = false;
+
 int main() {
     bool use_vulkan_compute = false;
 #if EMSCRIPTEN
@@ -102,6 +117,8 @@ int main() {
     std::string model_name = "candy";
     std::string model_name2 = "mosaic";
 
+    windowBoxRec = {static_cast<float>(screenWidth / 2 - 110), static_cast<float>(screenHeight / 2 - 100), 220, 190};
+
     detector = new Detector(model_path, opt, false);
     nstyle1 = new NeuralStyle(model_path, model_name, opt);
     nstyle2 = new NeuralStyle(model_path, model_name2, opt);
@@ -119,11 +136,12 @@ int main() {
     GuiSetStyle(DEFAULT, TEXT_SPACING, 1);
     // TTF Font loading with custom generation parameters
     Font font = LoadFontEx("GameCube.ttf", 18, 0, 0);
+    GuiSetFont(font);
 //    std::string fileName = "faces.png";
 //    image = LoadImage(fileName.c_str());
 //    texture = LoadTextureFromImage(image);
 
-    GuiPanel(Rectangle{0, 0, (float) GetScreenWidth(), (float) GetScreenHeight()});
+//    GuiPanel(Rectangle{0, 0, (float) GetScreenWidth(), (float) GetScreenHeight()});
 
 #if (PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
@@ -144,6 +162,8 @@ int main() {
 //----------------------------------------------------------------------------------
 void UpdateDrawFrame(void) {
     handleDroppedFiles(screenWidth, screenHeight, image, texture, imageLoaded, imageScale);
+    handleExport(fileName, image, imageLoaded, btnExport, windowBoxActive, texture);
+    handleImageScaling(screenWidth, screenHeight, image, imageLoaded, imageScale, imageRec);
     handleImageScaling(screenWidth, screenHeight, image, imageLoaded, imageScale, imageRec);
     BeginDrawing();
     ClearBackground(DARKGRAY);
@@ -166,16 +186,6 @@ void UpdateDrawFrame(void) {
                    19, 0.0f, WHITE);
         GuiDisable();
     }
-
-//    if (GuiButton(
-//            Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 4 * padding, buttonWidth, buttonHeight},
-//            "LFFD")) {
-////        lffd1.detectFacesAndDrawOnImage(image);
-//        detector->detectFaces(image);
-//        TraceLog(LOG_INFO, "ncnnRay: LFFD");
-//        UnloadTexture(texture);
-//        texture = LoadTextureFromImage(image);
-//    }
 
     if (GuiButton(
             Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 2 * padding, buttonWidth, buttonHeight},
@@ -210,10 +220,10 @@ void UpdateDrawFrame(void) {
     if (GuiButton(
             Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 5 * padding, buttonWidth, buttonHeight},
             "Candy")) {
-        ImageResize(&image, image.width / 4, image.height / 4);
+//        ImageResize(&image, image.width / 4, image.height / 4);
         image = nstyle1->applyStyleOnImage(image);
         TraceLog(LOG_INFO, "ncnnRay: candy");
-        ImageColorBrightness(&image, -40);
+//        ImageColorBrightness(&image, -40);
         texture = LoadTextureFromImage(image);
     }
 
@@ -225,6 +235,34 @@ void UpdateDrawFrame(void) {
         ImageColorBrightness(&image, +40);
         texture = LoadTextureFromImage(image);
     }
+
+    if (GuiButton(Rectangle{screenWidth - leftPadding, screenHeight - smallPadding - 10 * padding, buttonWidth, buttonHeight},"SAVE")) {
+//        PlaySound(saveImageSound);
+        TraceLog(LOG_INFO, "ncnnRay: save image");
+        windowBoxActive = true;
+    }
+
+
+    if (windowBoxActive) {
+        DrawRectangle(0, 0, screenWidth, screenHeight,
+                      Fade(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)), 0.75f));
+        windowBoxActive = !GuiWindowBox(Rectangle{windowBoxRec.x, windowBoxRec.y, 290, 220},
+                                        "Save Options");
+        GuiLabel(Rectangle{windowBoxRec.x + 10, windowBoxRec.y + 35, 60, 25}, "Format:");
+        fileFormatActive = GuiComboBox(Rectangle{windowBoxRec.x + 80, windowBoxRec.y + 35, 130, 25},
+                                       TextJoin(fileFormatTextList, 1, ";"), fileFormatActive);
+        GuiLabel(Rectangle{windowBoxRec.x + 10, windowBoxRec.y + 70, 63, 25}, "Pixel:");
+        pixelFormatActive = GuiComboBox(Rectangle{windowBoxRec.x + 80, windowBoxRec.y + 70, 130, 25},
+                                        TextJoin(pixelFormatTextList, 1, ";"), pixelFormatActive);
+        GuiLabel(Rectangle{windowBoxRec.x + 10, windowBoxRec.y + 105, 50, 25}, "Name:");
+        if (GuiTextBox(Rectangle{windowBoxRec.x + 80, windowBoxRec.y + 105, 130, 25},
+                       fileName, 64, textBoxEditMode))
+            textBoxEditMode = !textBoxEditMode;
+
+        btnExport = GuiButton(Rectangle{windowBoxRec.x + 10, windowBoxRec.y + 145, 260, 40}, "Save Image");
+    } else btnExport = false;
+
+    if (btnExport) DrawText("Image saved", 20, screenHeight - 20, 20, RED);
 
     GuiEnable();
     EndDrawing();
@@ -267,5 +305,20 @@ void handleDroppedFiles(const int screenWidth, const int screenHeight, Image &im
             }
         }
         ClearDroppedFiles();
+    }
+}
+
+void handleExport(char *fileName, const Image &image, bool imageLoaded, bool btnExport, bool &windowBoxActive,
+                  Texture2D &texture) {
+    if (btnExport) {
+        if (imageLoaded) {
+//                ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);
+            if ((GetExtension(fileName) == nullptr) || (!IsFileExtension(fileName, ".png")))
+                strcat(fileName, ".png\0");     // No extension provided
+            ExportImage(image, fileName);
+            UnloadTexture(texture);
+            texture = LoadTextureFromImage(image);
+        }
+        windowBoxActive = false;
     }
 }
