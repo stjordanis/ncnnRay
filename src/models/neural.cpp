@@ -1,24 +1,25 @@
 #include "neural.h"
 
+NeuralStyle::NeuralStyle() {};
+
 NeuralStyle::NeuralStyle(const std::string &model_path,
                          const std::string &model_name,
                          const ncnn::Option &opt
-                         ) {
+) {
 
     net.opt = opt;
 
-    #if NCNN_VULKAN
+#if NCNN_VULKAN
     if (net.opt.use_vulkan_compute) {
         TraceLog(LOG_INFO, "ncnnRay: Opt using vulkan::%i", net.opt.use_vulkan_compute);
         net.set_vulkan_device(g_vkdev);
     }
     #endif // NCNN_VULKAN
 
-//    std::string param = model_path + "/" + model_name +".param";
     std::string bin = model_path + "/" + model_name + ".bin";
     net.load_param(styletransfer_param_bin);
-//    net.load_param(styletransfer_param_bin[0]);
     net.load_model(bin.data());
+    TraceLog(LOG_INFO, "ncnnRay: model loaded, GPU enabled?=%i", net.opt.use_vulkan_compute);
 
 }
 
@@ -26,12 +27,13 @@ NeuralStyle::~NeuralStyle() = default;
 
 Image NeuralStyle::applyStyleOnImage(Image &image) {
     ncnn::Mat inmat = rayImageToNcnn(image);
-    cout << "Total:" << inmat.total() << endl;
-    cout << "D:" << tensorDIMS(inmat) << endl;;
+    cout << "Total in:" << inmat.total() << endl;
+    cout << "Dims in:" << tensorDIMS(inmat) << endl;;
 //    lffd0.detect(inmat, face_info, 240, 320);
     ncnn::Mat out = transform(inmat);
 //    lffd.detect(inmat, face_info, 240, 320);
-
+    cout << "Total out:" << out.total() << endl;
+    cout << "Dims out:" << tensorDIMS(out) << endl;;
     Image saveImage = ncnnToRayImage(out);
     return saveImage;
 //    ImageFormat(&image,UNCOMPRESSED_R8G8B8A8);

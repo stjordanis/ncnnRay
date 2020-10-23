@@ -3,7 +3,7 @@
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/logo.png?raw=true" width="35%"></a>  
 </h1>
 
-<h1 align="center">ncnnRay++: A CMake integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
+<h1 align="center">ncnnRay++: A CMake / WASM integration of rayib UI and the Tencent ncnn C++ AI platform.</h1>
 
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/studio02.png?raw=true" width="80%"></a>  
@@ -22,6 +22,8 @@
 ---
 
 # About
+
+Live demo here: https://quantscientist.github.io/ncnnRay/
 
 <h1 align="center">    
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/manga.png.exp.png?raw=true" width="55%"></a>  
@@ -214,13 +216,14 @@ year={2019}
 
 
 ## Requirements:
-* tested only on Windows 10 and Microsoft Visual C++ 2019 16.4
-* NVIDIA CUDA 10.2 + Vulkan SDK . I did not test with any other CUDA version. 
+* Tested only on Windows 10 and Microsoft Visual C++ 2019 16.4
+* Vulkan SDK  
 * ncnn  (downloaded automatically)  
 * Tested on 64 bit only device.  
 * CMake 3.18   
 * rayLib GUI (downloaded automatically).
-* Vulka SDK 
+* Vulkan SDK
+* Emscripten emsdk if you want to compile to WASM 
 
 # Building using CMake
 
@@ -239,10 +242,9 @@ cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" .
 -B bin64 -DNCNN_VULKAN=ON -DNCNN_SYSTEM_GLSLANG=ON -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON 
 -DNCNN_BUILD_TOOLS=ON  && cmake.exe --build bin64
 ````
-CLion is strongly recommended for the build. Please setup CLion as follows: 
-![ncnnRay++ Code](https://github.com/QuantScientist/ncnnRay/blob/master/asstes/clion.png?raw=true)
+CLion is strongly recommended for the build.  
    
-Then cd to the root folder of thie project and run again:
+Then cd to the root folder of the project and run again:
 ````bash
 cd to the root folder
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
@@ -253,14 +255,14 @@ cmake.exe -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - NMake Makefiles" .
 ## Downloading and installing steps rayLib:
 The **CMake file will download this automatically for you**.
 
-## Compiling on Windows
+# Compiling on Windows
 
 ````bash
-win10-build.bat 
+standalone.bat 
 ````
-## Compiling on Linux
+# Compiling on Linux
 
-Please use the provided **docker** that includes everything you need including Emiscripten. 
+Please use the provided **docker** that includes everything you need including Emscripten / emsdk. 
 ````bash
 git submodule update --init
 cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" . -B bin64 -DCMAKE_INSTALL_PREFIX=bin64 -DNCNN_VULKAN=OFF -DNCNN_SYSTEM_GLSLANG=OFF -DNCNN_BUILD_EXAMPLES=ON -DNCNN_BENCHMARK=ON -DNCNN_BUILD_TOOLS=ON  && cmake --build bin64
@@ -291,6 +293,11 @@ In file included from /src/ncnnRay/ncnnRay/src/ncnnRay_lffd_face.cpp:2:0:
   <img src="https://github.com/QuantScientist/ncnnRay/blob/main/assets/linux.png?raw=true" width="85%"></a>  
 </h1>
 
+# Compiling to WASM using Emscripten 
+* Install emsdk 
+* See web.bat (which is rather complicated to understand ...)
+* for Linux, you can use the provided docker file 
+
 ## Contributing
 
 Feel free to report issues during build or execution. We also welcome suggestions to improve the performance of this application.
@@ -319,6 +326,17 @@ If you find the code or trained models useful, please consider citing:
 ## Licensing
 
 - Copyright © [Shlomo Kashani, author of the book "Deep Learning Interviews"](www.interviews.ai)
+
+http://www.gnu.org/licenses/gpl-3.0.en.html
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+
 
 ## Third party licences:
 - raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified, 

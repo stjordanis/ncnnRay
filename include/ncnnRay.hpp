@@ -77,6 +77,19 @@
 
 #include <cstring> //to import the std::memcpy function.
 
+#include <iostream>
+#include <string.h>
+
+
+#include <emscripten.h>
+#include <fetch.h>
+#include <emscripten/fetch.h>
+#include <emscripten/emscripten.h>
+
+#if EMSCRIPTEN
+
+#endif
+
 //#if NCNN_VULKAN
 //#include "gpu.h"
 //#endif
@@ -97,6 +110,7 @@ static ncnn::VulkanDevice *g_vkdev = 0;
 static ncnn::VkAllocator *g_blob_vkallocator = 0;
 static ncnn::VkAllocator *g_staging_vkallocator = 0;
 #endif // NCNN_VULKAN
+
 
 using namespace std;
 
@@ -146,6 +160,18 @@ public:
     }
 };
 
+static void downloadSucceeded(emscripten_fetch_t *fetch) {
+//    printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes, fetch->url);
+    TraceLog(LOG_INFO, "Finished downloading %i", fetch->numBytes);
+    // The data is now available at fetch->data[0] through fetch->data[fetch->numBytes-1];
+    emscripten_fetch_close(fetch); // Free data associated with the fetch.
+}
+
+static void downloadFailed(emscripten_fetch_t *fetch) {
+    TraceLog(LOG_INFO,"Downloading %s failed, HTTP failure status code: %d.\n", fetch->url, fetch->status);
+    emscripten_fetch_close(fetch); // Also free data on failure.
+}
+
 static int tensorDIMS(const ncnn::Mat &tensor) {
     return tensor.dims;
 }
@@ -157,6 +183,11 @@ static ncnn::Option optGPU(bool use_vulkan_compute = false, int gpu_device = -1)
     opt.blob_allocator = &g_blob_pool_allocator;
     opt.workspace_allocator = &g_workspace_pool_allocator;
     opt.use_vulkan_compute = use_vulkan_compute;
+    opt.use_fp16_packed = true;
+    opt.use_fp16_storage = true;
+    opt.use_fp16_arithmetic = false;
+    opt.use_int8_storage = true;
+    opt.use_int8_arithmetic = false;
 
 //    opt.use_winograd_convolution = true;
 //    opt.use_sgemm_convolution = true;
@@ -228,7 +259,7 @@ static ncnn::Mat rayImageToNcnn(const Image &image) {
 //    ncnn::Mat tensor = ncnn::Mat::from_pixels(static_cast<const unsigned char *>(image.data), ncnn::Mat::PIXEL_RGB, width, height);
     ncnn::Mat tensor = ncnn::Mat::from_pixels((const unsigned char *) image.data, type, width, height);
 
-    TraceLog(LOG_INFO, "ncnnRay: final T dims:%i", tensor.shape().dims);
+    TraceLog(LOG_INFO, "ncnnRay: rayImageToNcnn final T dims:%i", tensor.shape().dims);
 //    delete[] pointer;
     return tensor;
 }
@@ -239,6 +270,7 @@ static Image ncnnToRayImage(ncnn::Mat &tensor) {
     unsigned char *torchPointer = reinterpret_cast<unsigned char *>(RL_MALLOC(
             3 * height * width * sizeof(unsigned char)));
     tensor.to_pixels(torchPointer, ncnn::Mat::PIXEL_RGB);
+    TraceLog(LOG_INFO, "ncnnRay: ncnnToRayImage final T dims:%i", tensor.shape().dims);
 //    return Image{0};
     return Image{
             torchPointer,

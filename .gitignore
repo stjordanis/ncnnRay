@@ -1,4 +1,4 @@
-**/tags
+*/tags
 .vscode
 **/*.o
 main
@@ -20,3 +20,4 @@ build.ninja
 rules.ninja
 Makefile
 .vscode/
+/wasm/cmake_install.cmake
