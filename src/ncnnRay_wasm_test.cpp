@@ -136,8 +136,8 @@ int main() {
     //emscripten_fetch(&attr, "http://localhost:9999/update.sh");
 
 //    emscripten_fetch(&attr, "https://raw.githubusercontent.com/juj/emscripten/emscripten_fetch/system/include/emscripten/fetch.h");
-    emscripten_fetch(&attr, "https://pbs.twimg.com/media/CAoh21KWEAARhYx.png");
-    emscripten_fetch(&attr, "http://localhost:8000/web/");
+//    emscripten_fetch(&attr, "https://pbs.twimg.com/media/CAoh21KWEAARhYx.png");
+//    emscripten_fetch(&attr, "http://localhost:8000/web/");
 
     // Initialization
     //--------------------------------------------------------------------------------------

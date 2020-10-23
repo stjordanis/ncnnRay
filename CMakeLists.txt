@@ -371,8 +371,8 @@ file(COPY "resources/mosaic.bin" DESTINATION ${ACTUAL_DIR})
 file(COPY "resources/candy.bin" DESTINATION ${ACTUAL_DIR})
 
 #file(COPY "resources/ncnn.html" DESTINATION ${ACTUAL_DIR})
-file(COPY "resources/shell-ray.html" DESTINATION ${ACTUAL_DIR})
+#file(COPY "resources/shell-ray.html" DESTINATION ${ACTUAL_DIR})
 #file(COPY "resources/shell.html" DESTINATION ${ACTUAL_DIR})
 file(COPY "resources/style.css" DESTINATION ${ACTUAL_DIR})
-#file(COPY "resources/index-tmpl.html" DESTINATION ${ACTUAL_DIR})
+file(COPY "resources/index.html" DESTINATION ${ACTUAL_DIR})
 
