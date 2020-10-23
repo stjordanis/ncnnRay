@@ -54,7 +54,7 @@ bool vidLoaded = false;
 float imageScale = 1.0f;
 float randomSeed = 0;
 Rectangle imageRec = {0.0f};
-const char *mainTitle = "ncnnRay: Model Studio";
+const char *mainTitle = "ncnnRay: WebAssembly AI studio";
 Color defTextCLR = GetColor(GuiGetStyle(DEFAULT, LINE_COLOR));
 
 
@@ -87,7 +87,7 @@ const char *pixelFormatTextList[1] = {"RGB"};
 bool textBoxEditMode = false;
 
 int main() {
-    bool use_vulkan_compute = false;
+    bool use_vulkan_compute = true;
 #if EMSCRIPTEN
     use_vulkan_compute = false;
 #endif
@@ -126,6 +126,18 @@ int main() {
     lffd = new LFFD(model_path, 8, 0, opt);
 
     TraceLog(LOG_INFO, "ncnnRay: models using vulkan::%i", detector->Net->opt.use_vulkan_compute);
+
+    emscripten_fetch_attr_t attr;
+    emscripten_fetch_attr_init(&attr);
+    strcpy(attr.requestMethod, "GET");
+    attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
+    attr.onsuccess = downloadSucceeded;
+    attr.onerror = downloadFailed;
+    //emscripten_fetch(&attr, "http://localhost:9999/update.sh");
+
+//    emscripten_fetch(&attr, "https://raw.githubusercontent.com/juj/emscripten/emscripten_fetch/system/include/emscripten/fetch.h");
+    emscripten_fetch(&attr, "https://pbs.twimg.com/media/CAoh21KWEAARhYx.png");
+    emscripten_fetch(&attr, "http://localhost:8000/web/");
 
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -181,7 +193,7 @@ void UpdateDrawFrame(void) {
         }
 
     } else {
-        DrawTextEx(GuiGetFont(), "ncnnRay MODEL STUDIO: DRAG & DROP A PNG IMAGE HERE.",
+        DrawTextEx(GuiGetFont(), "To start, DRAG & DROP A PNG IMAGE HERE.",
                    Vector2{10, (float) GetScreenHeight() - 52},
                    19, 0.0f, WHITE);
         GuiDisable();

@@ -77,6 +77,19 @@
 
 #include <cstring> //to import the std::memcpy function.
 
+#include <iostream>
+#include <string.h>
+
+
+#include <emscripten.h>
+#include <fetch.h>
+#include <emscripten/fetch.h>
+#include <emscripten/emscripten.h>
+
+#if EMSCRIPTEN
+
+#endif
+
 //#if NCNN_VULKAN
 //#include "gpu.h"
 //#endif
@@ -146,6 +159,18 @@ public:
         tictoc_stack = std::stack<high_resolution_clock::time_point>();
     }
 };
+
+static void downloadSucceeded(emscripten_fetch_t *fetch) {
+//    printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes, fetch->url);
+    TraceLog(LOG_INFO, "Finished downloading %i", fetch->numBytes);
+    // The data is now available at fetch->data[0] through fetch->data[fetch->numBytes-1];
+    emscripten_fetch_close(fetch); // Free data associated with the fetch.
+}
+
+static void downloadFailed(emscripten_fetch_t *fetch) {
+    TraceLog(LOG_INFO,"Downloading %s failed, HTTP failure status code: %d.\n", fetch->url, fetch->status);
+    emscripten_fetch_close(fetch); // Also free data on failure.
+}
 
 static int tensorDIMS(const ncnn::Mat &tensor) {
     return tensor.dims;
